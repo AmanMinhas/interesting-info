@@ -1,0 +1,8 @@
+
+<head>
+	<?php 
+		$title = "its-interesting ".$this->title; #This title should come from the action. 
+		echo $this->headTitle();
+	?>
+</head>
+

@@ -1,0 +1,22 @@
+<?php
+
+	$feeds = $this->feeds;
+	
+	//work on feeds.
+	
+	foreach ($feeds as $feed) {
+		$videoId = $feed['videoId'];
+		$thumbnail = $feed['thumbnail'] ;
+		$title = $feed['title'] ;
+		$desc = $feed['desc'] ; 
+		$flashUrl = $feed['flashUrl'];
+		
+		echo "<h2>".$title."</h2>";
+		echo "<p>".$desc."</p>";
+		
+		echo "<a href = \"$flashUrl\" >";
+		echo "<img src = \"$thumbnail\" height= \"50\" >";
+		echo "</a>";
+	}
+	
+?>
