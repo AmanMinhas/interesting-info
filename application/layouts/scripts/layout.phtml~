@@ -1,26 +1,14 @@
+<?= $this->doctype('XHTML1_STRICT'); ?>
 <html>
-	<head>
-		<?= $this->headTitle($this->title); ?>
-	
-		<!-- INCLUDE TWITTER BOOTSTRAP -->
-		<?= $this->headLink()->appendStylesheet("//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"); ?>
-		<?= $this->headScript()->appendScript("//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"); ?>
-		<!--
-		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		-->
+	<?= $this->render('includes/head_tag.phtml') ?>
 		
-		<!-- jQuery And jQuery UI-->
-		<?= $this->headScript()->appendScript("//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"); ?>
-		<?= $this->headLink()->appendStylesheet("//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css"); ?>
-		<?= $this->headScript()->appendScript("//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"); ?>
-		
-	</head>
 	<body>
+		<?= $this->render('includes/header.phtml') ?>
 		<div class= "container">
 			<button class="btn btn-success">Save!</button>
 			<?= $this->layout()->content; ?>
 		</div>
 	</body>
+	
 </html>
 

@@ -1,0 +1,43 @@
+
+<!-- 
+Top-Fixed Navigation Bar.
+-->
+<div class = "container">
+	<div class = "navbar navbar-default navbar-fixed-top">
+		<div class = "navbar-header">
+			<button type = "button" class = "navbar-toggle" data-toggle = "collapse" data-target = ".navbar-collapse" >
+				<span class = "icon-bar"></span>
+				<span class = "icon-bar"></span>
+				<span class = "icon-bar"></span>
+			</button>
+			<a href = "#" class = "navbar-brand">IT'S INTERESTING!!</a>
+		</div> <!-- End .navbar-header -->
+		
+		<div class = "navbar-collapse collapse navbar-right">
+			<ul class = "nav navbar-nav">
+				<li><a href = "#">HOME</a></li>
+				<li class = "divider"></li>
+				<li><a href = "#">NAME</a></li>
+				
+				<li class = "dropdown" > 
+					<a href = "#" class = "dropdown-toggle" data-toggle = "dropdown" >SETTING <b class= "caret"></b> </a>
+					<ul class = "dropdown-menu">
+						<li><a href = "#">Preferences</a></li>
+						<li class = "divider"></li>
+						<li><a href = "#">Log Out</a></li>
+					</ul>
+				</li>
+				
+				<li class = "dropdown" > 
+					<a href = "#" class = "dropdown-toggle" data-toggle = "dropdown" >MORE <b class= "caret"></b> </a>
+					<ul class = "dropdown-menu">
+						<li><a href = "#"> About</a></li>
+						<li><a href = "#"> Contact</a></li>
+					</ul>
+				</li>
+				
+			</ul>					
+		</div> <!-- End .navbar-collapse collapse -->
+			
+	</div> <!-- End .navbar navbar-default navbar-fixed-top -->
+</div> <!-- End .Container-->

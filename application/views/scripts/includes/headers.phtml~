@@ -1,8 +1,16 @@
 
-<head>
-	<?php 
-		$title = "its-interesting ".$this->title; #This title should come from the action. 
-		echo $this->headTitle();
-	?>
-</head>
-
+<!-- 
+Top-Fixed Navigation Bar.
+-->
+<div class = "container">
+	<div class = "navbar navbar-default navbar-fixed-top">
+		<div class = "navbar-header">
+			<button type = "button" class = "navbar-toggle" data-toggle = "collapse" data-targer = ".navbar-collapse">
+				<span class = "icon-bar"></span>
+				<span class = "icon-bar"></span>
+				<span class = "icon-bar"></span>
+			</button>
+			<a href = "#" class = "navbar-brand">IT'S INTERESTING!!</a>
+		</div>
+	</div>
+</div>
