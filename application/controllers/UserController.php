@@ -22,6 +22,18 @@ class UserController extends Zend_Controller_Action
     public function createAction()
     {
         // action body
+#         $config = new Zend_Config($this->getOptions(), true);
+#			$config = Zend_Registry::get('config');        
+			$newUser = new Application_Model_User;
+   	     $arr = array (
+   	     	"username"		=>"AmanMinhas",
+   	     	"first_name" 	=> "Aman",
+   	     	"last_name"		=> "Minhas",
+   	     	"email"			=> "amandeepSinghMinhas@gmail.com",
+   	     	"pass"			=> hash('sha512',"password")
+   	     );
+  			$newUser->createUser($arr);
+  			
     }
 
     public function editAction()

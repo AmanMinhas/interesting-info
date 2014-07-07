@@ -28,5 +28,14 @@ $application = new Zend_Application(
     APPLICATION_ENV,
     APPLICATION_PATH . '/configs/application.ini'
 );
+
+Zend_Session::start();
+
+$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+$db = Zend_Db::factory($config->db);
+Zend_Db_Table_Abstract::setDefaultAdapter($db);
+Zend_Registry::set('db',$db);
+Zend_Registry::set('config',$config);
+		
 $application->bootstrap()
             ->run();
