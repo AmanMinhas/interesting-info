@@ -1,0 +1,81 @@
+<div id = "signup_carousel" class = "carousel slide">
+	<ol class = "carousel-indicators">
+		<li data-target ="#signup_carousel" data-slide-to ="0" class ="active"></li>
+		<li data-target ="#signup_carousel" data-slide-to ="1"></li>
+		<li data-target ="#signup_carousel" data-slide-to ="2"></li>
+		<li data-target ="#signup_carousel" data-slide-to ="3"></li>
+		<li data-target ="#signup_carousel" data-slide-to ="4"></li>
+		<li data-target ="#signup_carousel" data-slide-to ="5"></li>
+		<li data-target ="#signup_carousel" data-slide-to ="6"></li>
+		<li data-target ="#signup_carousel" data-slide-to ="7"></li>
+	</ol>
+	<div class ="carousel-inner">
+		<?php
+		
+		for($i=1;$i<=8;$i++) {
+			if(1==$i) {
+				echo '<div class ="item active">';
+			} else {
+				echo '<div class ="item">'; //  width = "100%" height = "100%" 
+			}
+
+			echo '<img class = "carousel-img" src = "/img/carousel'.$i.'.jpg" width = "100%" height = "100%"  />';
+			echo '
+				<div class ="container">
+					<div class = "carousel-caption">
+						<h1>IT\'s INTERESTING</h1>
+						<p>Have something interesting to share ? Come join us!</p>
+						<p><a class = "btn btn-large btn-primary">Sign Up!</a></p>
+					</div>
+				</div>
+			</div>';
+		}
+		?>
+	</div> <!-- end .carousel inner-->
+
+<!--
+	<div class = "carousel-inner">
+		<div class ="item active">
+			<img class = "carousel-img" src = "/img/carousel1.jpg" />
+			<div class ="container">
+				<div class = "carousel-caption">
+					<h1>IT's INTERESTING</h1>
+					<p>Have something interesting to share ? Come join us!</p>
+					<p><a class = "btn btn-large btn-primary">Sign Up!</a></p>
+				</div>
+			</div>
+		</div>
+
+		<div class ="item">
+			<img class = "carousel-img" src = "/img/carousel2.jpg"/>
+			<div class ="container">
+				<div class = "carousel-caption">
+					<h2>IT's INTERESTING</h2>
+					<p>Have something interesting to share ? Come join us!</p>
+					<p><a class = "btn btn-large btn-primary">Sign Up!</a></p>
+				</div>
+			</div>
+		</div>
+
+		<div class ="item">
+			<img class = "carousel-img" src = "/img/carousel3.jpg"/>
+			<div class ="container">
+				<div class = "carousel-caption">
+					<h2>IT's INTERESTING</h2>
+					<p>Have something interesting to share ? Come join us!</p>
+					<p><a class = "btn btn-large btn-primary">Sign Up!</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+-->
+	<a class = "left carousel-control" href = "#signup_carousel" data-slide="prev">
+		<span class = "glyphicon glyphicon-chevron-left"></span> 
+	</a>
+
+	<a class = "right carousel-control" href = "#signup_carousel" data-slide="next">
+		<span class = "glyphicon glyphicon-chevron-right"></span> 
+	</a>
+
+</div>

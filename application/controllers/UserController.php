@@ -10,7 +10,7 @@ class UserController extends Zend_Controller_Action
 
     public function indexAction()
     {
-		$this->view->title = "INDEX";
+		  $this->view->title = "INDEX";
         // action body
     }
 
@@ -26,11 +26,11 @@ class UserController extends Zend_Controller_Action
 #			$config = Zend_Registry::get('config');        
 			$newUser = new Application_Model_User;
    	     $arr = array (
-   	     	"username"		=>"AmanMinhas",
-   	     	"first_name" 	=> "Aman",
-   	     	"last_name"		=> "Minhas",
-   	     	"email"			=> "amandeepSinghMinhas@gmail.com",
-   	     	"pass"			=> hash('sha512',"password")
+   	     	"username"		 => "AmanMinhas",
+   	     	"first_name" 	 => "Aman",
+   	     	"last_name"		 => "Minhas",
+   	     	"email"			   => "amandeepSinghMinhas@gmail.com",
+   	     	"pass"			   => hash('sha512',"password")
    	     );
   			$newUser->createUser($arr);
   			
@@ -38,7 +38,8 @@ class UserController extends Zend_Controller_Action
 
     public function editAction()
     {
-        // action body
+      $this->_helper->layout->setLayout('signup_layout');
+      // action body
     }
 
     public function updateAction()
