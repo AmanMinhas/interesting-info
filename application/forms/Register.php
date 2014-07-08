@@ -23,11 +23,11 @@ class Application_Form_Register extends Zend_Form
         $lastNameElement->setRequired(true);
 
         //UserName
-       	$usernameElement = new Zend_Form_Element_Text('username');
-       	$usernameElement->setLabel('Username');
-       	$usernameElement->setRequired(true);
-       	$usernameElement->setAttrib('class','form-group form-control col-sm-2');
-       	$usernameElement->addFilter(new Zend_Filter_StripTags());
+		$usernameElement = new Zend_Form_Element_Text('username');
+		$usernameElement->setLabel('Username');
+		$usernameElement->setRequired(true);
+		$usernameElement->setAttrib('class','form-group form-control col-sm-2');
+		$usernameElement->addFilter(new Zend_Filter_StripTags());
 		$usernameElement->addFilter(new Zend_Filter_HtmlEntities());
 		$usernameElement->addFilter(new Zend_Filter_StringToLower());
         
