@@ -17,6 +17,8 @@ class UserController extends Zend_Controller_Action
     public function newAction()
     {
         // action body
+      $register = new Application_Form_Register;
+      $this->view->register = $register;
     }
 
     public function createAction()
@@ -32,7 +34,7 @@ class UserController extends Zend_Controller_Action
    	     	"email"			   => "amandeepSinghMinhas@gmail.com",
    	     	"pass"			   => hash('sha512',"password")
    	     );
-  			$newUser->createUser($arr);
+  			$newUser->createUser($arr); 
   			
     }
 
