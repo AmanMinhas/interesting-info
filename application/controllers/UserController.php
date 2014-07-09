@@ -18,6 +18,14 @@ class UserController extends Zend_Controller_Action
     {
         // action body
       $register = new Application_Form_Register;
+      $request = $this->getRequest();
+      if($request->isPost()){
+        // if($register->isValid($this->_request->isPost())) {
+        if($register->isValid($_POST)) {
+          echo "in here";
+        } 
+      }
+      // var_dump($this->_request->isPost());
       $this->view->register = $register;
     }
 
