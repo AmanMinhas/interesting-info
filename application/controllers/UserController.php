@@ -16,7 +16,8 @@ class UserController extends Zend_Controller_Action
 
     public function newAction()
     {
-        // action body
+      $this->_helper->layout->setLayout('signup_layout');
+      
       $register = new Application_Form_Register;
       $request = $this->getRequest();
       if($request->isPost()){

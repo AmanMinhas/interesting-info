@@ -32,6 +32,21 @@ class Application_Model_User extends Zend_Db_Table_Abstract
 		$this->delete($where);
 	}
 	
+	public static function isRegisteredUser($username) {
+
+		$user = new Zend_Db_Table(array("name"=>"User"));
+		
+		$select = $user->select()->where("username = ?",$username)->limit(1);
+
+		$row = $user->fetchRow($select);
+
+		if(1==count($row)) {
+			return true;
+		}
+
+		return false;
+
+	}
 }
 
 ?>

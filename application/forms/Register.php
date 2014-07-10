@@ -30,6 +30,7 @@ class Application_Form_Register extends Zend_Form
 		$usernameElement->addFilter(new Zend_Filter_StripTags());
 		$usernameElement->addFilter(new Zend_Filter_HtmlEntities());
 		$usernameElement->addFilter(new Zend_Filter_StringToLower());
+        $usernameElement->addValidator(new My_Validate_Text_Username());
         
         //Email Address
         $emailElement = new Zend_Form_Element_Text('email');
@@ -55,8 +56,29 @@ class Application_Form_Register extends Zend_Form
         $confirmPasswordElement->setRequired(true);
         $confirmPasswordElement->setAttrib('class','form-group form-control');
         $confirmPasswordElement->addValidator(new Zend_Validate_StringLength(6,20));
+        $confirmPasswordElement->addValidator(new Zend_Validate_Identical('password'));
         $confirmPasswordElement->addFilter(new Zend_Filter_HtmlEntities());
         $confirmPasswordElement->addFilter(new Zend_Filter_StripTags());
+
+        //CAPTCHA
+        // $captchaElement = new Zend_Form_Element_Captcha('captcha',
+        // $captchaElement = $this->createElement('captcha','captcha',
+        //     array(
+        //         "label"     => "",
+        //         "required"  => true,
+        //         "captcha"   => array (
+        //                 "captcha"   => "Image",
+        //                 "name"      => "MyCaptcha",
+        //                 "font"      => APPLICATION_PATH."../public/fonts/Ubuntu-R.tff",
+        //                 "height"    => 50,
+        //                 "width"     => 150,
+        //                 "wordLen"   => 5,
+        //                 "timeout"   => 300,
+        //                 "imgDir"    => APPLICATION_PATH."../public/captcha",
+        //                 "imgUrl"    => Zend_Controller_Front::getInstance()->getBaseUrl().'/captcha',
+        //             )
+        //         )
+        //     );
 
         //Submit
         $submitButton = new Zend_Form_Element_Submit('submit');
@@ -70,10 +92,9 @@ class Application_Form_Register extends Zend_Form
         		$emailElement,
         		$passwordElement,
         		$confirmPasswordElement,
-        		$submitButton
+                // $captchaElement,
+                $submitButton
         	));
     }
-
-
 }
 
