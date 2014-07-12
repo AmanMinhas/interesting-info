@@ -21,9 +21,17 @@ class UserController extends Zend_Controller_Action
       $register = new Application_Form_Register;
       $request = $this->getRequest();
       if($request->isPost()){
-        // if($register->isValid($this->_request->isPost())) {
         if($register->isValid($_POST)) {
-          echo "in here";
+          /*
+            Expected Params "firstName" , "lastName", "username", "email", "password", "confirm_password"
+          */
+          $params = $this->getRequest()->getPost();
+          if($params["password"] !== $params["confirm_password"]) {
+            // "redirect to /User/new" with an err mgs.
+          }
+
+          $this->_forward('create',null,null,array('params'=> $params));
+
         } 
       }
       // var_dump($this->_request->isPost());
@@ -32,19 +40,27 @@ class UserController extends Zend_Controller_Action
 
     public function createAction()
     {
-        // action body
-#         $config = new Zend_Config($this->getOptions(), true);
-#			$config = Zend_Registry::get('config');        
-			$newUser = new Application_Model_User;
-   	     $arr = array (
-   	     	"username"		 => "AmanMinhas",
-   	     	"first_name" 	 => "Aman",
-   	     	"last_name"		 => "Minhas",
-   	     	"email"			   => "amandeepSinghMinhas@gmail.com",
-   	     	"pass"			   => hash('sha512',"password")
-   	     );
-  			$newUser->createUser($arr); 
-  			
+      $params = $this->_getParam('params');
+      // var_dump($params);
+      
+      $newUser = new Application_Model_User;
+      $arr = array (
+      	"username"		 => $params["username"],
+      	"first_name" 	 => $params["firstName"],
+      	"last_name"		 => $params["lastName"],
+      	"email"			   => $params["email"],
+      	"pass"			   => hash('sha512',$params["password"]),
+        "role"         => "user",
+        "active"       => 0
+      );
+
+      try {
+  	    $id = $newUser->createUser($arr); 
+        $newUser->sendActivationEmail($id,$arr["email"]);
+        $this->view->message = "Please check email to activate your account. Be sure to check the spam folder as well." ;
+      } catch (Zend_Exception $e) {
+        var_dump($e->getMessage());
+      }	
     }
 
     public function editAction()
@@ -56,11 +72,45 @@ class UserController extends Zend_Controller_Action
     public function updateAction()
     {
         // action body
+      $id = $this->_getParam('id');
+      $set = $this->_getParam('set');
+      
+      $where = "id = $id";
+      $user = new Application_Model_User;
+      if($user->updateUser($set,$where)){
+        echo "Account activated"; // Also provide link for login
+      } else {
+        echo "Failed to activate account, please try again";
+      }
+
     }
 
     public function deleteAction()
     {
         // action body
+    }
+
+    public function activateAccountAction() {
+      $id     = $this->getRequest()->getParam('id');
+      $set    = array("active" => 1);
+
+      $this->_forward('update',null,null,array('id'=>$id, 'set'=>$set ));
+    }
+
+    public function testAction() {
+      $this->_helper->layout()->disableLayout();
+      $mail = new Zend_Mail();
+      $mail 
+        ->addTo('amandeepSinghMinhas@gmail.com',"Aman Minhas")
+        ->setSubject("My Subject")
+        ->setBodyText("Some body msg")
+        ->setBodyHtml("Some body msg") ;
+      
+      try {
+        $mail->send();
+      } catch (Exception $e) {
+        var_dump($e->getMessage());
+      }
     }
 }
 

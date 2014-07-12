@@ -5,12 +5,25 @@ class Application_Model_User extends Zend_Db_Table_Abstract
 	protected $_name = "User";
 		
 	public function createUser($arr) {
-		$this->insert($arr);
+		try {
+			$this->insert($arr);
+			$id = $this->getAdapter()->lastInsertId();
+			return $id;
+		} catch ( Zend_Exception $e ) {
+			var_dump($e->getMessage());
+		}
 	}
 	
-	public function updateUser($set,$condition = "1=1") {
-		$where = $this->getAdapter()->quoteInto($condition);
-		$this->update($set,$where);
+	public function updateUser($set,$condition = array("1=1")) {
+		
+		$where = $this->getAdapter()->quoteInto($condition,"");
+		
+		try {
+			$this->update($set,$where);
+			return true;
+		} catch (Zend_Exception $e) {
+			var_dump($e->getMessage());
+		}
 	}
 	
 	public function getAll() {
@@ -32,6 +45,23 @@ class Application_Model_User extends Zend_Db_Table_Abstract
 		$this->delete($where);
 	}
 	
+	public function sendActivationEmail($id,$to) {
+		$mail = new Zend_Mail();
+		
+		$htmlmessage = 
+			"Thank You for signing up with It's Interesting. <br/> 
+			Please activate your account by clicking at the button below <br>
+			<a href = \"aman_proj/User/activate-account?id=".$id."\"><button class =\"btn btn-primary\">Activate Account</button></a>";
+
+		$mail 	->addTo($to)
+				->setFrom("aman.minhas16@gmail.com","Its Interesting")
+				->setSubject("My Subject")
+				->setBodyText("Some body msg")
+				->setBodyHtml($htmlmessage)
+				->send();
+	}
+
+
 	public static function isRegisteredUser($username) {
 
 		$user = new Zend_Db_Table(array("name"=>"User"));
