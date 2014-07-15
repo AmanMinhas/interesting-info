@@ -72,15 +72,20 @@ class UserController extends Zend_Controller_Action
     public function updateAction()
     {
         // action body
+      $user = new Application_Model_User;
+
       $id = $this->_getParam('id');
       $set = $this->_getParam('set');
       
-      $where = "id = $id";
-      $user = new Application_Model_User;
-      if($user->updateUser($set,$where)){
-        echo "Account activated"; // Also provide link for login
+      if($user->validUserID($id)) {
+        $where = "id = $id";
+        if($user->updateUser($set,$where)){
+          echo "Account activated"; // Also provide link for login
+        } else {
+          echo "Failed to activate account, please try again";
+        }
       } else {
-        echo "Failed to activate account, please try again";
+        echo "Sorry! User does not exist";
       }
 
     }

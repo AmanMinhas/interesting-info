@@ -1,9 +1,7 @@
 <!-- 
 Top-Fixed Navigation Bar.
 -->
-<!-- <?= $this->headScript()->appendFile("js/signup.js") ?> ; // This js should have dialog for signup 
-	On second thoughs, you may not need the previous line.
--->
+
 <div class = "container">
 	<div class = "navbar navbar-inverse navbar-fixed-top">
 		<div class = "container">
@@ -13,17 +11,21 @@ Top-Fixed Navigation Bar.
 					<span class = "icon-bar"></span>
 					<span class = "icon-bar"></span>
 				</button>
-				<a href = "#" class = "navbar-brand">IT'S INTERESTING!!</a>
+				<a href = "/" class = "navbar-brand">IT'S INTERESTING!!</a>
 			</div> <!-- End .navbar-header -->
 			
 			<div class = "navbar-collapse collapse navbar-right">
 				<ul class = "nav navbar-nav">
-					<li><a href = "#">LOG IN</a></li>
-					<li><button class = "btn btn-primary">LOG IN</button></li>
-					<li class = "divider"></li>
-					<li><a href = "#">SIGN UP</a></li>
+					<li><a href = "#" id="signup-header-login">LOG IN</a></li>
+					<li><a href = "/User/new">SIGN UP</a></li>
 				</ul>					
 			</div> <!-- End .navbar-collapse collapse -->
+		</div> <!-- End .Container-->
+	</div> <!-- End .navbar navbar-default navbar-fixed-top -->
+
+	<div class = "navbar navbar-inverse" id = "signup-header-login-form-div">
+		<div class = "container">
+			<input type="text"/>
 		</div> <!-- End .Container-->
 	</div> <!-- End .navbar navbar-default navbar-fixed-top -->
 </div> <!-- End .Container-->

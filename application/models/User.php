@@ -33,11 +33,25 @@ class Application_Model_User extends Zend_Db_Table_Abstract
 	}
 	
 	public function getRowByUsername($username) {
-		$select = $this->select()
-								->where("username = ? ",$username);
+		$select = $this->select()->where("username = ? ",$username);
 		
 		$user = $this->fetchRow($select);
-		return $user->toArray();						
+		if(!empty($user)) {
+			return $user->toArray();
+		} else {
+			return array();
+		} 
+	}
+
+	public function getUserById($id) {
+		$select = $this->select()->where("id=?",$id);
+
+		$user = $this->fetchRow($select);
+		if(!empty($user)) {
+			return $user->toArray();
+		} else {
+			return array();
+		} 
 	}
 	
 	public function deleteUser($condition) {	
@@ -61,6 +75,16 @@ class Application_Model_User extends Zend_Db_Table_Abstract
 				->send();
 	}
 
+	public function validUserID($id) {
+		$user = $this->getUserById($id);
+		
+		if(!empty($user)) {
+			return true;
+		} else {
+			return false;
+		}		
+
+	}
 
 	public static function isRegisteredUser($username) {
 
@@ -77,6 +101,7 @@ class Application_Model_User extends Zend_Db_Table_Abstract
 		return false;
 
 	}
+
 }
 
 ?>
