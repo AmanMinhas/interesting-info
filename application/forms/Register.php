@@ -30,7 +30,6 @@ class Application_Form_Register extends Zend_Form
 		$usernameElement->addFilter(new Zend_Filter_StripTags());
 		$usernameElement->addFilter(new Zend_Filter_HtmlEntities());
 		$usernameElement->addFilter(new Zend_Filter_StringToLower());
-        $usernameElement->addValidator(new My_Validate_Text_Username());
         
         //Email Address
         $emailElement = new Zend_Form_Element_Text('email');

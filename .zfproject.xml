@@ -29,6 +29,7 @@
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="Register"/>
+        <formFile formName="LoginForm"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>

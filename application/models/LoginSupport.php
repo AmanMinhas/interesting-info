@@ -2,10 +2,36 @@
 
 class Application_Model_LoginSupport extends Zend_Db_Table_Abstract
 {
+	private function getAuthAdapter(){
+		$authAdapter = new Zend_Auth_Adapter_DbTable(Zend_Db_Table::getDefaultAdapter());
+		$authAdapter->setTableName('User')
+					->setIdentityColumn('username')
+					->setCredentialColumn('pass')
+					->setCredentialTreatment('sha512(?)');
+
+		return $authAdapter;
+	}
 	/*
 		Password you receive should already be hashed : hash('sha512',$password); 
 	*/
 	public function login($username,$password) {
+		$authAdapter = $this->getDefaultAdapter();
+
+		$authAdapter->setIdentity($username);
+		$authAdapter->setCredential($password);	
+
+		$auth = Zend_Auth::getInstance();
+		$result = $auth->authenticate($authAdapter);
+
+		if($result->isValid()) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public function login1($username,$password) {
 		$db = new Zend_Db_Table(array("name"=>"User"));	
 		
 		if(!$this->user_exists($username)){
