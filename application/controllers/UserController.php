@@ -11,6 +11,12 @@ class UserController extends Zend_Controller_Action
     public function indexAction()
     {
 		  $this->view->title = "INDEX";
+      $salt = rand(1,99);
+
+      $var1 =  hash('sha512','password',$salt);
+      $var2 =  hash('sha512','password',$salt);
+      
+      echo ($var1===$var2)?true:false;
         // action body
     }
 
@@ -41,6 +47,7 @@ class UserController extends Zend_Controller_Action
     public function createAction()
     {
       $params = $this->_getParam('params');
+      $salt = rand(0,100);
       // var_dump($params);
       
       $newUser = new Application_Model_User;
@@ -49,7 +56,8 @@ class UserController extends Zend_Controller_Action
       	"first_name" 	 => $params["firstName"],
       	"last_name"		 => $params["lastName"],
       	"email"			   => $params["email"],
-      	"pass"			   => hash('sha512',$params["password"]),
+      	"pass"			   => hash('sha512',$params["password"],$salt),
+        "salt"         => $salt,
         "role"         => "user",
         "active"       => 0
       );

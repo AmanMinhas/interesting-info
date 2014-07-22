@@ -16,9 +16,11 @@ class LoginController extends Zend_Controller_Action
 	public function authAction() {
 
 	  	$this->_helper->layout->setLayout('signup_layout');
-		
+		// $this->_helper->layout->disableLayout();
+
 		$username = "AmanMinhas";
-		$password = hash('sha512',"password");
+		$salt = '';
+		$password = hash('sha512',"password",$salt);
 		
 		$user = new Application_Model_LoginSupport;
 		
@@ -36,14 +38,16 @@ class LoginController extends Zend_Controller_Action
 			$result = $auth->authenticate($authAdapter);
 
 			if($result->isValid()) {
+				$this->view->ret = "true";
 				return true;
 			} else {
+				$this->view->ret = "false";
 				return false;
 			}
 			// var_dump($_POST);
 			// var_dump($user->login($username,$password));
 		} else {
-			echo "No post";
+			echo "No request received";
 		}
 
 #		var_dump($user->check_brute(4));
@@ -71,11 +75,12 @@ class LoginController extends Zend_Controller_Action
 	}
 
 	private function getAuthAdapter(){
-		$authAdapter = new Zend_Auth_Adapter_DbTable(Zend_Db_Table::getDefaultAdapter());
+		// $authAdapter = new Zend_Auth_Adapter_DbTable(Zend_Db_Table::getDefaultAdapter());
+		$authAdapter = new My_Auth_Adapter(Zend_Db_Table::getDefaultAdapter());
 		$authAdapter->setTableName('User')
 					->setIdentityColumn('username')
-					->setCredentialColumn('pass')
-					->setCredentialTreatment('UNHEX(sha512(?))');
+					->setCredentialColumn('pass');
+					// ->setCredentialTreatment('UNHEX(sha512(?))');
 
 		return $authAdapter;
 	}

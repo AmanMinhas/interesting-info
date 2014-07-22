@@ -8,7 +8,7 @@ class Application_Form_LoginForm extends Zend_Form
         /* Form Elements & Other Definitions Here ... */
         $this->SetName('Login');
         $this->setMethod('POST');
-        $this->setAction('Login/auth');
+        $this->setAction('/Login/auth');
         $this->setAttrib('class','login_form');
 
         //UserName
