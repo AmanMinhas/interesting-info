@@ -68,7 +68,6 @@ class Application_Model_User extends Zend_Db_Table_Abstract
 			<a href = \"aman_proj/User/activate-account?id=".$id."\"><button class =\"btn btn-primary\">Activate Account</button></a>";
 
 		$mail 	->addTo($to)
-				->setFrom("aman.minhas16@gmail.com","Its Interesting")
 				->setSubject("My Subject")
 				->setBodyText("Some body msg")
 				->setBodyHtml($htmlmessage)

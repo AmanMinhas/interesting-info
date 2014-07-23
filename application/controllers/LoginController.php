@@ -15,40 +15,54 @@ class LoginController extends Zend_Controller_Action
 	
 	public function authAction() {
 
-	  	$this->_helper->layout->setLayout('signup_layout');
-		// $this->_helper->layout->disableLayout();
-
-		$username = "AmanMinhas";
-		$salt = '';
-		$password = hash('sha512',"password",$salt);
+	  	// $this->_helper->layout->disableLayout();
+		if(Zend_Auth::getInstance()->hasIdentity()){
+			$this->_redirect('User/home');
+		}
 		
+		$loginForm = new Application_Form_LoginForm;
 		$user = new Application_Model_LoginSupport;
 		
 		$request = $this->getRequest();
-		if($_POST) {
-			$username = $request->getPost('username');
-			$password = $request->getPost('password');
-			
-			$authAdapter = $this->getAuthAdapter();
-			
-			$authAdapter->setIdentity($username);
-			$authAdapter->setCredential($password);	
+		// if($_POST) {
+		if($request->isPost()) {
+			if($loginForm->isValid($this->_request->getPost())) {
 
-			$auth = Zend_Auth::getInstance();
-			$result = $auth->authenticate($authAdapter);
+				// $username = $request->getPost('username');
+				// $password = $request->getPost('password');
+				
+				$username = $loginForm->getValue('username');
+				$password = $loginForm->getValue('password');
 
-			if($result->isValid()) {
-				$this->view->ret = "true";
-				return true;
-			} else {
-				$this->view->ret = "false";
-				return false;
+				$authAdapter = $this->getAuthAdapter();
+				
+				$authAdapter->setIdentity($username);
+				$authAdapter->setCredential($password);	
+
+				$auth = Zend_Auth::getInstance();
+				$result = $auth->authenticate($authAdapter);
+
+				if($result->isValid()) {
+					$this->_helper->layout->setLayout('layout');
+
+					$identity = $authAdapter->getResultRowObject();
+
+					$authStorage = $auth->getStorage();
+					$authStorage->write($identity);
+
+					$this->_redirect('User/home');
+				} else {
+					$this->_helper->layout->setLayout('signup_layout');
+					$this->view->err_msg = $result;
+				}
 			}
+			// echo "here";
 			// var_dump($_POST);
 			// var_dump($user->login($username,$password));
-		} else {
-			echo "No request received";
 		}
+		$this->_helper->layout->setLayout('signup_layout');
+		$this->view->login_form = $loginForm;
+		
 
 #		var_dump($user->check_brute(4));
 
@@ -84,6 +98,7 @@ class LoginController extends Zend_Controller_Action
 
 		return $authAdapter;
 	}
+
 
 }
 

@@ -8,7 +8,7 @@ class Application_Form_LoginForm extends Zend_Form
         /* Form Elements & Other Definitions Here ... */
         $this->SetName('Login');
         $this->setMethod('POST');
-        $this->setAction('/Login/auth');
+        $this->setAction(Zend_Controller_Front::getInstance()->getBaseUrl().'/Login/auth');
         $this->setAttrib('class','login_form');
 
         //UserName
@@ -19,7 +19,7 @@ class Application_Form_LoginForm extends Zend_Form
 		$usernameElement->addFilter(new Zend_Filter_StripTags());
 		$usernameElement->addFilter(new Zend_Filter_HtmlEntities());
 		$usernameElement->addFilter(new Zend_Filter_StringToLower());
-        $usernameElement->addValidator(new My_Validate_Text_Username());
+        // $usernameElement->addValidator(new My_Validate_Text_Username());
         $this->addElement($usernameElement);
 
         //Password

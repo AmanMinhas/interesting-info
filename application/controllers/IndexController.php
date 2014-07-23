@@ -14,5 +14,10 @@ class IndexController extends Zend_Controller_Action
         // action body
     }
 
+    public function logoutAction(){
+		Zend_Auth::getInstance()->clearIdentity();
+		$this->_redirect(Zend_Controller_Front::getInstance()->getBaseUrl());
+	}
+
 }
 

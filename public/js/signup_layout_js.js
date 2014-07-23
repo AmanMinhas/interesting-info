@@ -1,6 +1,12 @@
 
 $(document).ready(function(){
 	console.log("here");
+
+	//Carousel in the home page shoule be spread across the entire page and not just in the center.
+	if($("#signup_carousel").parent().is(".container")) {
+		$("#signup_carousel").unwrap();
+	}
+
 	$("#signup-header-login-form-div").hide();
 	
 	$("#signup-header-login").click(function() {

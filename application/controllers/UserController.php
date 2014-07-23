@@ -103,14 +103,16 @@ class UserController extends Zend_Controller_Action
         // action body
     }
 
-    public function activateAccountAction() {
+    public function activateAccountAction()
+    {
       $id     = $this->getRequest()->getParam('id');
       $set    = array("active" => 1);
 
       $this->_forward('update',null,null,array('id'=>$id, 'set'=>$set ));
     }
 
-    public function testAction() {
+    public function testAction()
+    {
       $this->_helper->layout()->disableLayout();
       $mail = new Zend_Mail();
       $mail 
@@ -125,7 +127,16 @@ class UserController extends Zend_Controller_Action
         var_dump($e->getMessage());
       }
     }
+
+    public function homeAction()
+    {
+        // action body
+    }
+
+
 }
+
+
 
 
 

@@ -19,6 +19,7 @@
           <actionMethod actionName="edit"/>
           <actionMethod actionName="update"/>
           <actionMethod actionName="delete"/>
+          <actionMethod actionName="home"/>
         </controllerFile>
         <controllerFile controllerName="YT">
           <actionMethod actionName="index"/>
@@ -72,6 +73,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Login">
             <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="home"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
