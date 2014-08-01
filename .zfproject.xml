@@ -27,10 +27,15 @@
         <controllerFile controllerName="Login">
           <actionMethod actionName="index"/>
         </controllerFile>
+        <controllerFile controllerName="Article">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="new"/>
+        </controllerFile>
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="Register"/>
         <formFile formName="LoginForm"/>
+        <formFile formName="NewArticleForm"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -40,6 +45,9 @@
       <modelsDirectory>
         <modelFile modelName="User"/>
         <modelFile modelName="LoginSupport"/>
+        <dbTableDirectory>
+          <dbTableFile dbTableName="Article"/>
+        </dbTableDirectory>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <viewsDirectory>
@@ -76,6 +84,12 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="User">
             <viewScriptFile forActionName="home"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Article">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Article">
+            <viewScriptFile forActionName="new"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

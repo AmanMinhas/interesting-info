@@ -17,7 +17,7 @@ class LoginController extends Zend_Controller_Action
 
 	  	// $this->_helper->layout->disableLayout();
 		if(Zend_Auth::getInstance()->hasIdentity()){
-			$this->_redirect('User/home');
+			// $this->_redirect('User/home');
 		}
 		
 		$loginForm = new Application_Form_LoginForm;
@@ -50,10 +50,11 @@ class LoginController extends Zend_Controller_Action
 					$authStorage = $auth->getStorage();
 					$authStorage->write($identity);
 
-					$this->_redirect('User/home');
+					// $this->_redirect('User/home');
 				} else {
 					$this->_helper->layout->setLayout('signup_layout');
 					$this->view->err_msg = $result;
+					var_dump($result);
 				}
 			}
 			// echo "here";

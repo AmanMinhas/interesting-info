@@ -1,10 +1,11 @@
 <br /><br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Login</b> and script/action name <b>auth</b></p>
-</div> 
 <?php 
 	if(isset($this->err_msg)) {
-		var_dump($this->err_msg->getMessages());
+		echo "<ul class=\"\">";
+		foreach ($this->err_msg->getMessages() as $msg) {
+			echo "<li class =\"text-danger\">$msg</li>";
+		}
+		echo "</ul>";		
 	}
 	echo $this->login_form; 
 ?>

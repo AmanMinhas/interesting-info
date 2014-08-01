@@ -77,9 +77,9 @@ class UserController extends Zend_Controller_Action
       // action body
     }
 
-    public function updateAction()
+    public function updateAction() 
     {
-        // action body
+      // action body
       $user = new Application_Model_User;
 
       $id = $this->_getParam('id');
@@ -95,12 +95,11 @@ class UserController extends Zend_Controller_Action
       } else {
         echo "Sorry! User does not exist";
       }
-
     }
 
     public function deleteAction()
     {
-        // action body
+      // action body
     }
 
     public function activateAccountAction()
