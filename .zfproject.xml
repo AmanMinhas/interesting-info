@@ -30,6 +30,7 @@
         <controllerFile controllerName="Article">
           <actionMethod actionName="index"/>
           <actionMethod actionName="new"/>
+          <actionMethod actionName="create"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
@@ -90,6 +91,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Article">
             <viewScriptFile forActionName="new"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Article">
+            <viewScriptFile forActionName="create"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

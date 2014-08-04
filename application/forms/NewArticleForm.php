@@ -7,7 +7,7 @@ class Application_Form_NewArticleForm extends Zend_Form
     {
 
         $this->setMethod('POST');
-        $this->setAction(Zend_Controller_Front::getInstance()->getBaseUrl().'/User/home'); // Change Action from new to create
+        // $this->setAction(Zend_Controller_Front::getInstance()->getBaseUrl().'/User/home'); // Change Action from new to create
         // $this->setAttrib('class','login_form');
 
         //Title
@@ -22,16 +22,16 @@ class Application_Form_NewArticleForm extends Zend_Form
         $this->addElement($titleElement);
 
         //Default Image with article
-        $destination = APPLICATION_PATH."/../upload/articleImg";
-        chmod($destination ,0777);
+        // $destination = APPLICATION_PATH."/../upload/articleImg";
+        // chmod($destination ,0777);
 
-        $imgElement = new Zend_Form_Element_File('imgElement');
-        $imgElement->setLabel("Upload an Image:");
-        $imgElement->setDestination($destination);      
-        $imgElement->addValidator('Count',false,1); //ensure only 1 file
-        $imgElement->addValidator('Size',false,102400); //limit to 100K
-        $imgElement->addValidator('Extension',false,'jpg,png,gif');
-        $this->addElement($imgElement);
+        // $imgElement = new Zend_Form_Element_File('imgElement');
+        // $imgElement->setLabel("Upload an Image:");
+        // $imgElement->setDestination($destination);      
+        // $imgElement->addValidator('Count',false,1); //ensure only 1 file
+        // $imgElement->addValidator('Size',false,102400); //limit to 100K
+        // $imgElement->addValidator('Extension',false,'jpg,png,gif');
+        // $this->addElement($imgElement);
 
         //Description Area
         $descriptionElement = new Zend_Form_Element_Textarea('descriptionElement');
