@@ -1,2 +1,40 @@
-<br/><br/><br/>
-dekhte hai.
+<html>
+	<head>
+		<?= $this->headTitle($this->title); ?>
+		<?php 
+			// $tagit_path = APPLICATION_PATH."/../../tag-it/";
+			// $tagit_js_path = $tagit_path."js/tag-it.js";
+		?>
+		<!-- jQuery -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		
+		<!-- jQuery UI -->
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		
+		<!-- INCLUDE TWITTER BOOTSTRAP -->
+		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+		<?php
+			// $this->headScript($this->baseUrl()."/js/tag-it.js");
+			// $this->headScript(APPLICATION_PATH."/../library/tag-it/js/tag-it.js");
+			// $this->headLink()->setStylesheet(APPLICATION_PATH."/../library/tag-it/css/jquery.tagit.css");
+			$this->headScript("home/aman/Work/aman_proj/library/tag-it/js/tag-it.js");
+			$this->headLink()->setStylesheet("home/aman/Work/aman_proj/library/tag-it/css/jquery.tagit.css");
+		?>
+		<script type="text/javascript">
+		    $(document).ready(function() {
+		        $("#myTags").tagit();
+		    });
+		</script>
+
+	</head>
+	<body>
+		<ul id="myTags">
+		    <!-- Existing list items will be pre-added to the tags -->
+		    <li>Tag1</li>
+		    <li>Tag2</li>
+		</ul>
+	</body>
+</html>

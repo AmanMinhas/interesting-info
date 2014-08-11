@@ -32,7 +32,8 @@ class ArticleController extends Zend_Controller_Action
     public function createAction()
     {
         $params = $this->_getParam('params');
-        var_dump($params);
+        $userInfo = Zend_Auth::getInstance()->getStorage()->read();
+
         $article = new Application_Model_DbTable_Article;
 
         $row = array();
@@ -49,9 +50,9 @@ class ArticleController extends Zend_Controller_Action
             }
         }
 
-        $row["uid"] = ""; // get from session
+        $row["uid"] = $userInfo->id; // get from session
         $row["published"] = 1;
-        $row["user_published"] = "" ;
+        $row["user_published"] = $userInfo->id ;
 
         $article->insert($row);
     }

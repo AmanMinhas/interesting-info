@@ -6,6 +6,7 @@ class UserController extends Zend_Controller_Action
     public function init()
     {
         /* Initialize action controller here */
+        // $this->view->first_name = Zend_Auth::getInstance()->getStorage()->read()->first_name;
     }
 
     public function indexAction()
@@ -113,18 +114,18 @@ class UserController extends Zend_Controller_Action
     public function testAction()
     {
       $this->_helper->layout()->disableLayout();
-      $mail = new Zend_Mail();
-      $mail 
-        ->addTo('amandeepSinghMinhas@gmail.com',"Aman Minhas")
-        ->setSubject("My Subject")
-        ->setBodyText("Some body msg")
-        ->setBodyHtml("Some body msg") ;
+      // $mail = new Zend_Mail();
+      // $mail 
+      //   ->addTo('amandeepSinghMinhas@gmail.com',"Aman Minhas")
+      //   ->setSubject("My Subject")
+      //   ->setBodyText("Some body msg")
+      //   ->setBodyHtml("Some body msg") ;
       
-      try {
-        $mail->send();
-      } catch (Exception $e) {
-        var_dump($e->getMessage());
-      }
+      // try {
+      //   $mail->send();
+      // } catch (Exception $e) {
+      //   var_dump($e->getMessage());
+      // }
     }
 
     public function homeAction()
