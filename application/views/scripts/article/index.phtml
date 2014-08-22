@@ -1,4 +1,18 @@
 <br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Article</b> and script/action name <b>index</b></p>
-</div>
+<?php
+	$article = $this->article;
+	
+	// If $article is false => Article does not exist.
+	if(!$article) {
+		$error = '
+			<div class="alert alert-danger alert-error show-validation-error">
+				Sorry! The article you are searching for does not exist.
+			</div>';
+		
+		echo($error);
+		return;
+	}
+	
+	echo $article->title."<br>";
+	echo $article->article_text;	
+?>

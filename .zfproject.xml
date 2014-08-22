@@ -48,6 +48,8 @@
         <modelFile modelName="LoginSupport"/>
         <dbTableDirectory>
           <dbTableFile dbTableName="Article"/>
+          <dbTableFile dbTableName="ArticleAttributeMap"/>
+          <dbTableFile dbTableName="ArticleAttribute"/>
         </dbTableDirectory>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>

@@ -11,6 +11,21 @@ class ArticleController extends Zend_Controller_Action
     public function indexAction()
     {
         // action body
+        $id = $this->getRequest()->getParam('id');
+        if(!isset($id)){
+            $this->_redirect('/Article/new');
+        }
+
+        $articles = new Application_Model_DbTable_Article;
+
+        $select = $articles->select()->where('id = ?',$id);
+        $row    = $articles->fetchRow("id = ".$id);
+
+        if(is_null($row)){
+            $this->view->article = false;
+        } else {
+            $this->view->article = $row;
+        }
     }
 
     public function newAction()
@@ -19,34 +34,41 @@ class ArticleController extends Zend_Controller_Action
         $this->view->headScript()->appendFile($this->view->baseUrl().'/js/new-article.js');
         $this->view->headLink()->appendStylesheet($this->view->baseUrl().'/css/new-article.css');
 
-        $newArticle = new Application_Form_NewArticleForm();
-        
+        // $newArticle = new Application_Form_NewArticleForm();
         $request = $this->getRequest();
         if($request->isPost()) {
-            if($newArticle->isValid($_POST)) {
-                $params = $request->getPost();
-                $this->_forward('create',null,null,array('params'=> $params));
-            }
+            echo "here";
+            $params = $this->getRequest()->getPost();
+            print_r($params);
+            $this->_forward('create',null,null,array('params'=> $params));
         }
 
-        $this->view->newArticle = $newArticle;
+        // $this->view->newArticle = $newArticle;
     }
 
     public function createAction()
     {
-        $params = $this->_getParam('params');
-        $userInfo = Zend_Auth::getInstance()->getStorage()->read();
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
 
-        $article = new Application_Model_DbTable_Article;
+        $params     = $this->_getParam('params');
+        $userInfo   = Zend_Auth::getInstance()->getStorage()->read();
+        $tags       = array();
+
+        $articles               = new Application_Model_DbTable_Article;
+        $articleAttributeMap    = new Application_Model_DbTable_ArticleAttributeMap;
 
         $row = array();
         foreach ($params as $key=>$val) {
             switch($key) {
-                case "titleElement" :
+                case "title" :
                     $row["title"] = $val; 
                     break;
-                case "descriptionElement" :
+                case "description" :
                     $row["article_text"] = $val; 
+                    break;
+                case "tags" :
+                    $tags = $val;
                     break;
                 default :
                     break;
@@ -57,7 +79,19 @@ class ArticleController extends Zend_Controller_Action
         $row["published"] = 1;
         $row["user_published"] = $userInfo->id ;
 
-        $article->insert($row);
+        $id = $articles->insert($row); // $id will be inserted row's id.
+
+        foreach ($tags as $tag) {
+            $row = array(
+                    "attr_id"           => 1 , // attr_id 1 is for tag
+                    "article_id"        => $id,
+                    "value"             => $tag,
+                    "published"         => 1 ,
+                    "date_published"    => new Zend_Db_Expr("NOW()")       
+                );
+
+            $articleAttributeMap->insert($row);
+        }
     }
 
 

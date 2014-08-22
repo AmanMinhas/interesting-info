@@ -3,9 +3,18 @@
 	echo $this->headLink()->appendStylesheet($this->baseUrl().'/css/tag-it-css/jquery.tagit.css');
 ?>
 <br></br>
+
 <button class="btn btn-default btn-lg disabled btn-block"><span class="glyphicon glyphicon-plus"></span> New Article</button><br>
 
-<form class = "form-horizontal" method = "POST">
+<!-- Validation Errors -->
+<div class="alert alert-danger alert-error show-validation-error"></div>
+
+<!-- Success Message -->
+<div class="alert alert-success show-validation-success"></div>
+
+<!-- New Article Form -->
+<form class = "form-horizontal new-article-form" method = "POST">
+	<!-- Title -->
 	<div class = "form-group">
 		<label class="control-label col-xs-3" for ="title">Title : <span class="glyphicon glyphicon-pencil"> </label>
 		<div class = "col-xs-6">
@@ -13,14 +22,16 @@
 		</div>
 	</div>
 	
+	<!-- Upload -->
 	<div class = "form-group">
 		<label class="control-label col-xs-3" for ="Upload">Upload : <span class="glyphicon glyphicon-upload"> </label>
 		<div class = "col-xs-6">
-		<!-- <input class="form-control" type ="text" id="inputUpload" placeholder = "Upload Images"></input> -->
-				<span class="btn btn-default btn-file"> Browse <input type="file"> </span> 
+		<input class="form-control" type ="file" id="inputUpload" placeholder = "Upload Images"></input>
+				<!-- <span class="btn btn-default btn-file"> Browse <input type="file"> </span>  -->
 		</div>
 	</div>
 
+	<!-- Description -->
 	<div class = "form-group">
 		<label class="control-label col-xs-3" for ="Description">Description : <span class="glyphicon glyphicon-align-justify"> </label>
 		<div class = "col-xs-6">
@@ -28,12 +39,14 @@
 		</div>
 	</div>
 
+	<!-- Tags -->
 	<div class = "form-group">
 		<label class="control-label col-xs-3" for ="tags">Tags : <span class="glyphicon glyphicon-tags"> </label>
 		<div class = "col-xs-6">
-			<ul id="myTags"></ul>
+			<ul id="article-tags"></ul>
 		</div>
 	</div>
+	<input type = "hidden" name="tags" id="all-tags" disabled="true"> 
 
 	<button id="create-article" class="btn btn-primary btn-lg active btn-block"><span class="glyphicon glyphicon-send"></span> Create New Article</button>
 
