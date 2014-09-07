@@ -1,11 +1,38 @@
 <br /><br />
 <?php
-	// $userInfo = Zend_Auth::getInstance()->getStorage()->read();
+	$userInfo 	= $this->userInfo;
+	$articles 	= $this->articles;
 ?>
 <!-- Share Something Interesting Button-->
 <a href="/Article/new" class="btn btn-default btn-info btn-lg btn-block">
 	<span class="glyphicon glyphicon-plus"></span> 
 	Share Something Interesting
 </a>
-
 <!-- Search Something Interesting By Tag -->
+
+<!-- List Articles -->
+<?php
+		
+	echo "<hr><div class = 'container'>";
+		echo "<div class = 'row'>";
+			foreach ($articles as $article) {
+				createArticleThumbnail($article);
+			}
+		echo "</div>";
+	echo "</div>";
+
+	function createArticleThumbnail($article){
+		$th 	 = "";
+		$th 	.=		"<div class = 'col-md-3'>";
+		$th 	.=			"<div class = 'thumbnail'>";
+		$th 	.=				"<img src = '/img/default/default.jpg"."' />";
+		$th 	.=				"<div class = 'caption'>";
+		$th 	.=					"<h3>".$article->title."</h3>";
+		$th 	.=					"<p>".$article->article_text."</p>";
+		$th 	.=				"</div>";
+		$th 	.=			"</div>";
+		$th 	.=		"</div>";
+
+		echo $th;
+	}
+?>

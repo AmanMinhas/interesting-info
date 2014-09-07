@@ -1,7 +1,8 @@
-<br /><br />
 <?php
-	$article = $this->article;
-	
+	$article 			= $this->article;
+	$articleAttributes	= $this->articleAttributes;
+	$tags 				= ""; 
+
 	// If $article is false => Article does not exist.
 	if(!$article) {
 		$error = '
@@ -9,10 +10,43 @@
 				Sorry! The article you are searching for does not exist.
 			</div>';
 		
-		echo($error);
+		echo $error;
 		return;
 	}
-	
-	echo $article->title."<br>";
-	echo $article->article_text;	
+
+	foreach ($articleAttributes as $attr) {
+		if("1"==$attr->attr_id) {
+			$tags 	.= $attr->value.",";
+		}
+	}
 ?>
+
+<?php
+	echo $this->headScript()->appendFile($this->baseUrl().'/js/tag-it-js/tag-it.js');
+	echo $this->headLink()->appendStylesheet($this->baseUrl().'/css/tag-it-css/jquery.tagit.css');
+	
+	echo $this->headScript()->appendFile($this->baseUrl().'/js/article.js');
+	echo $this->headLink()->appendStylesheet($this->baseUrl().'/css/article.css');
+?>
+
+<button class="btn btn-default btn-lg disabled btn-block"><span class="glyphicon glyphicon-plus"></span> <?= $article->title;?></button><br>
+<div class = "article-img">
+	<?php echo "<img class='img-rounded 'src = '".$this->baseUrl()."/img/default/default.jpg"."' />" ;?>
+</div><br>
+
+<input id="hidden-tags" type="hidden" value="<?= $tags; ?>"/>
+<input id="hidden-article-id" type="hidden" value="<?= $article->id; ?>"/>
+
+<ul id="readOnlyTags" ><li>outside</li></ul>
+
+<div class = "article-description"><?= $article->article_text; ?></div>
+
+<!-- Add Article Form, Initially hidden, Toggle on #add-comment-button click -->
+<form id = "add-comment-form"><hr>
+	<textarea id = "comment-textarea" ></textarea>
+	<button id = "post-comment-button" class="btn btn-primary">Post</button>
+</form>
+<br>
+<button id = "add-comment-button" class="btn btn-primary btn-lg btn-block">Add Comment <span class="glyphicon glyphicon-comment"></span></button>
+
+<div id = "view-comments-div"></div>

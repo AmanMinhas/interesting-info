@@ -11,20 +11,33 @@ class ArticleController extends Zend_Controller_Action
     public function indexAction()
     {
         // action body
+        $this->view->headScript()->appendFile($this->view->baseUrl().'/js/new-article.js');
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl().'/css/new-article.css');
+
         $id = $this->getRequest()->getParam('id');
         if(!isset($id)){
             $this->_redirect('/Article/new');
         }
 
-        $articles = new Application_Model_DbTable_Article;
 
-        $select = $articles->select()->where('id = ?',$id);
-        $row    = $articles->fetchRow("id = ".$id);
+        $articles               = new Application_Model_DbTable_Article;
+        $articleAttributeMap    = new Application_Model_DbTable_ArticleAttributeMap;
 
-        if(is_null($row)){
+        $select     = $articles->select()->where('id = ?',$id);
+        $article    = $articles->fetchRow("id = ".$id);
+
+        if(is_null($article)){
             $this->view->article = false;
         } else {
-            $this->view->article = $row;
+
+            $select = $articleAttributeMap->select()
+                        ->where('article_id = ?', $article->id)
+                        ->where('published = ?',1) ;
+            
+            $articleAttributes   = $articleAttributeMap->fetchAll($select);
+            
+            $this->view->article            = $article;
+            $this->view->articleAttributes  = $articleAttributes;
         }
     }
 
@@ -37,7 +50,6 @@ class ArticleController extends Zend_Controller_Action
         // $newArticle = new Application_Form_NewArticleForm();
         $request = $this->getRequest();
         if($request->isPost()) {
-            echo "here";
             $params = $this->getRequest()->getPost();
             print_r($params);
             $this->_forward('create',null,null,array('params'=> $params));
@@ -94,10 +106,70 @@ class ArticleController extends Zend_Controller_Action
         }
     }
 
+    public function ajaxAddCommentAction() {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
 
+        $userInfo       = Zend_Auth::getInstance()->getStorage()->read();
+        $article_id     = $this->getRequest()->getPost('article_id'); 
+        $new_comment    = $this->getRequest()->getPost('comment'); 
+
+        $comment = new Application_Model_DbTable_Comments;
+
+        $row = array(
+                "article_id"        => $article_id,
+                "comment"           => $new_comment,
+                "published"         => 1,
+                "user_published"    => $userInfo->id,
+                "date_published"    => new Zend_Db_Expr("NOW()")
+            );
+
+        echo $comment->insert($row);
+        
+    }
+
+    public function getArticleCommentsAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $article_id     = $this->getRequest()->getParam('article_id');
+
+        $comment        = new Application_Model_DbTable_Comments;
+
+        $select         = $comment->select()
+                                    ->where("article_id = ? ", $article_id)
+                                    ->where("published = ?",1)
+                                    ->order("date_published DESC");
+
+        $article_comments   = $comment->fetchAll($select);
+
+        echo json_encode($article_comments->toArray());
+
+    }
+
+    public function getArticleCommentByIdAction() {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $comment_id = $this->getRequest()->getParam('comment_id');
+
+        $comment    = new Application_Model_DbTable_Comments;
+
+        $select     = $comment->select()
+                                ->where("id = ?", $comment_id)
+                                ->where("published = ?",1);
+
+        $comment_row    = $comment->fetchRow($select);
+
+        echo json_encode($comment_row->toArray());
+    }
+
+    public function testAction() {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+        
+        $userInfo = Zend_Auth::getInstance()->getStorage()->read();
+        
+        print_r($userInfo);              
+    }
 }
-
-
-
-
-

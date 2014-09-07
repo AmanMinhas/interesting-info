@@ -23,9 +23,10 @@ $(document).ready(function() {
 	// On Submit
 	$("#create-article").click(function(ev) {
 		ev.preventDefault();
-		console.log($("#inputUpload").val());
+		// console.log("here");
+		// console.log($("#inputUpload").val());
 		if(validateArticle()) {
-			// createArticle();
+			createArticle();
 		} else {
 			alert("new article not created.");
 			// showvalidationErrors();
@@ -40,18 +41,14 @@ function createArticle() {
 	var tags 		= $("#all-tags").val(); ;
 
 	tags = tags.split(','); // Similar to php Explode() function
-	
 	$.ajax({
 		type 		: "POST",
 		url			: "/Article/new",
 		data		: {"title" : title , "description" : description , "tags" : tags },
 		success 	: function(msg) {console.log(msg)}
 	}).done(function(data){
-		// console.log(data);
-		// $(".new-article-form").slideUp();
-		// $(".show-validation-error").slideUp();
 		showSuccessMsg();
-		// alert("new article created.");
+		hideNewArticleForm();
 	}).error(function(data){
 		
 	});
@@ -59,7 +56,7 @@ function createArticle() {
 
 function validateArticle() {
 	validation_errors = [];
-
+	
 	// Validate Title
 	var title = $("#inputTitle").val();
 	if(typeof(title)=="undefined" || title==null || title == "") {
@@ -77,9 +74,8 @@ function validateArticle() {
 		addValidationError(const_NOT_ENOUGH_TAGS);
 		return false;
 	}
-
+	
 	return true;
-
 }
 
 function addValidationError(msg) {
@@ -97,8 +93,20 @@ function showvalidationErrors() {
 	$(".show-validation-error").append("</ul>");
 }
 
+function hidevalidationErrors() {
+	$(".show-validation-error").hide();
+}
+
 function showSuccessMsg() {
 	var msg = "<h4><strong>Success!</strong> Article Created! </h4>";
 	$(".show-validation-success").html(msg);
 	$(".show-validation-success").slideDown();
+}
+
+function hideSuccessMsg() {
+	$(".show-validation-success").hide();
+}
+
+function hideNewArticleForm() {
+	$(".new-article-form").hide();
 }

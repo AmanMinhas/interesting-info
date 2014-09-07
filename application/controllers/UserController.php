@@ -111,9 +111,17 @@ class UserController extends Zend_Controller_Action
       $this->_forward('update',null,null,array('id'=>$id, 'set'=>$set ));
     }
 
+    public function ajaxGetUserByIdAction() {
+      $this->_helper->layout->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(TRUE);
+
+    }
+
     public function testAction()
     {
       $this->_helper->layout()->disableLayout();
+      
+      // echo json_encode($userData);
       // $mail = new Zend_Mail();
       // $mail 
       //   ->addTo('amandeepSinghMinhas@gmail.com',"Aman Minhas")
@@ -128,23 +136,24 @@ class UserController extends Zend_Controller_Action
       // }
     }
 
-    public function homeAction()
-    {
+    public function homeAction() {
         // action body
+
+        $userInfo         = Zend_Auth::getInstance()->getStorage()->read();
+        $articleOptions   = array();
+        $article          = new Application_Model_DbTable_Article;
+        $articleAttribute = new Application_Model_DbTable_ArticleAttributeMap;
+        $user             = new Application_Model_User;
+
+        $select     = $article->select()
+                              ->where('uid = ?',$userInfo->id)
+                              ->where('published = ?',1)
+                              ->order('date_published DESC');
+
+        $articles   = $article->fetchAll($select);
+        
+        $this->view->articles = $articles;
+        $this->view->userInfo = $userInfo;
+        // $this->view->baseUrl  = $this->baseUrl();
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

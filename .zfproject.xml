@@ -37,6 +37,7 @@
         <formFile formName="Register"/>
         <formFile formName="LoginForm"/>
         <formFile formName="NewArticleForm"/>
+        <formFile formName="AddComment"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -50,6 +51,8 @@
           <dbTableFile dbTableName="Article"/>
           <dbTableFile dbTableName="ArticleAttributeMap"/>
           <dbTableFile dbTableName="ArticleAttribute"/>
+          <dbTableFile dbTableName="Name"/>
+          <dbTableFile dbTableName="Comments"/>
         </dbTableDirectory>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>

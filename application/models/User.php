@@ -46,7 +46,7 @@ class Application_Model_User extends Zend_Db_Table_Abstract
 	public function getUserById($id) {
 		$select = $this->select()->where("id=?",$id);
 
-		$user = $this->fetchRow($select);
+		$user 	= $this->fetchRow($select);
 		if(!empty($user)) {
 			return $user->toArray();
 		} else {
