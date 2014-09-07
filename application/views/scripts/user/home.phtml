@@ -1,5 +1,8 @@
 <br /><br />
 <?php
+	echo $this->headScript()->appendFile($this->baseUrl().'/js/home.js');
+	echo $this->headLink()->appendStylesheet($this->baseUrl().'/css/home.css');
+
 	$userInfo 	= $this->userInfo;
 	$articles 	= $this->articles;
 ?>
@@ -23,15 +26,15 @@
 
 	function createArticleThumbnail($article){
 		$th 	 = "";
-		$th 	.=		"<div class = 'col-md-3'>";
-		$th 	.=			"<div class = 'thumbnail'>";
-		$th 	.=				"<img src = '/img/default/default.jpg"."' />";
-		$th 	.=				"<div class = 'caption'>";
-		$th 	.=					"<h3>".$article->title."</h3>";
-		$th 	.=					"<p>".$article->article_text."</p>";
-		$th 	.=				"</div>";
+		$th 	.=	"<div class = 'col-md-3'>";
+		$th 	.=		"<div class = 'thumbnail article_thumbnail' id = article_thumbnail_".$article->id.">";
+		$th 	.=			"<img src = '/img/default/default.jpg"."' />";
+		$th 	.=			"<div class = 'caption'>";
+		$th 	.=				"<h3>".$article->title."</h3>";
+		$th 	.=				"<p>".$article->article_text."</p>";
 		$th 	.=			"</div>";
 		$th 	.=		"</div>";
+		$th 	.=	"</div>";
 
 		echo $th;
 	}
