@@ -8,9 +8,7 @@ $(document).ready(function() {
 	const_NOT_ENOUGH_TAGS 			= "Minimum of 3 tags expected.";
 
 	$("#article-tags").tagit({
-		// availableTags: sampleTags,
-        // This will make Tag-it submit a single form value, as a comma-delimited field.
-        singleField: true,
+		singleField: true,
         singleFieldNode: $('#all-tags')
    	});
 
@@ -23,13 +21,11 @@ $(document).ready(function() {
 	// On Submit
 	$("#create-article").click(function(ev) {
 		ev.preventDefault();
-		// console.log("here");
-		// console.log($("#inputUpload").val());
 		if(validateArticle()) {
 			createArticle();
 		} else {
 			alert("new article not created.");
-			// showvalidationErrors();
+			showvalidationErrors();
 		}
 	});
 
@@ -44,13 +40,12 @@ function createArticle() {
 	$.ajax({
 		type 		: "POST",
 		url			: "/Article/new",
-		data		: {"title" : title , "description" : description , "tags" : tags },
-		success 	: function(msg) {console.log(msg)}
+		data		: {"title" : title , "description" : description , "tags" : tags }
 	}).done(function(data){
 		showSuccessMsg();
 		hideNewArticleForm();
-	}).error(function(data){
-		
+	}).fail(function(data){
+		alert("Server Error! Could not create article");
 	});
 }
 

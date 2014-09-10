@@ -3,6 +3,9 @@
 	echo $this->headScript()->appendFile($this->baseUrl().'/js/home.js');
 	echo $this->headLink()->appendStylesheet($this->baseUrl().'/css/home.css');
 
+	echo $this->headScript()->appendFile($this->baseUrl().'/js/tag-it-js/tag-it.js');
+	echo $this->headLink()->appendStylesheet($this->baseUrl().'/css/tag-it-css/jquery.tagit.css');
+
 	$userInfo 	= $this->userInfo;
 	$articles 	= $this->articles;
 ?>
@@ -10,32 +13,63 @@
 <a href="/Article/new" class="btn btn-default btn-info btn-lg btn-block">
 	<span class="glyphicon glyphicon-plus"></span> 
 	Share Something Interesting
-</a>
+</a><br>
+
 <!-- Search Something Interesting By Tag -->
+<div class = "form-group">
+	<label class="control-label col-xs-1" for ="tags">Tags : <span class="glyphicon glyphicon-tags"> </label>
+	<div class = "col-xs-10">
+		<ul id="article-tags"></ul>
+	</div>
+	<div class = "col-xs-1 pull-left">
+		<button id="search-by-tags" class="btn btn-default btn-info btn-block active "><span class="glyphicon glyphicon-search"></span></button>
+	</div>
 
-<!-- List Articles -->
-<?php
-		
-	echo "<hr><div class = 'container'>";
-		echo "<div class = 'row'>";
-			foreach ($articles as $article) {
-				createArticleThumbnail($article);
-			}
-		echo "</div>";
-	echo "</div>";
+</div>
+<input type = "hidden" name="tags" id="all-tags" disabled="true"> 
+<br><hr>	
 
-	function createArticleThumbnail($article){
-		$th 	 = "";
-		$th 	.=	"<div class = 'col-md-3'>";
-		$th 	.=		"<div class = 'thumbnail article_thumbnail' id = article_thumbnail_".$article->id.">";
-		$th 	.=			"<img src = '/img/default/default.jpg"."' />";
-		$th 	.=			"<div class = 'caption'>";
-		$th 	.=				"<h3>".$article->title."</h3>";
-		$th 	.=				"<p>".$article->article_text."</p>";
-		$th 	.=			"</div>";
-		$th 	.=		"</div>";
-		$th 	.=	"</div>";
+<div class = "col-lg-9 searched-articles-list">
+	<!-- List Articles -->
+	<?php
+		// echo "<div class = 'container'>";
+			echo "<div class = 'row'>";
+				foreach ($articles as $article) {
+					createArticleThumbnail($article);
+				}
+			echo "</div>";
+		// echo "</div>";
 
-		echo $th;
-	}
-?>
+		function createArticleThumbnail($article){
+			$th 	 = "";
+			$th 	.=	"<div class = 'col-lg-4'>";
+			$th 	.=		"<div class = 'thumbnail article_thumbnail' id = article_thumbnail_".$article->id.">";
+			$th 	.=			"<img src = '/img/default/default.jpg"."' />";
+			$th 	.=			"<div class = 'caption'>";
+			$th 	.=				"<h3>".$article->title."</h3>";
+			$th 	.=				"<p>".$article->article_text."</p>";
+			$th 	.=			"</div>";
+			$th 	.=		"</div>";
+			$th 	.=	"</div>";
+
+			echo $th;
+		}
+	?>
+</div>
+<div class = "col-lg-3">
+	<div class ="list-group">
+
+		<!-- Popular tags -->
+		<div class = "list-group-item">
+			<h4 class = "list-group-item-heading" >Popular Tags</h4>
+			<p class = "list-group-item-text" >Most popular tags will go here</p>
+		</div>
+		<br>
+
+		<!-- Popular Articles -->
+		<div class = "list-group-item">
+			<h4 class = "list-group-item-heading" >Popular Articles</h4>
+			<p class = "list-group-item-text" >Most Popular articles will go here</p>
+		</div>
+	</div>
+</div>

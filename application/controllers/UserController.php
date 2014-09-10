@@ -83,8 +83,8 @@ class UserController extends Zend_Controller_Action
       // action body
       $user = new Application_Model_User;
 
-      $id = $this->_getParam('id');
-      $set = $this->_getParam('set');
+      $id   = $this->_getParam('id');
+      $set  = $this->_getParam('set');
       
       if($user->validUserID($id)) {
         $where = "id = $id";
