@@ -164,6 +164,59 @@ class ArticleController extends Zend_Controller_Action
         echo json_encode($comment_row->toArray());
     }
 
+    public function searchArticlesByTagsAction() {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+
+        $article            = new Application_Model_DbTable_Article;
+        $userTagSearchMap   = new Application_Model_DbTable_UserTagSearchMap;
+
+        $curr_user  = Zend_Auth::getInstance()->getStorage()->read();
+
+        $tags       = $this->getRequest()->getPost('tags'); // received as comma separated text.
+        if(empty($tags)) {
+            $tags   = array();
+        } else {
+            $tags   = explode(",",$tags);
+        }
+        //Create Record in UserTagSearchMap
+        
+        //Get Tags that were searched last time as well
+        $lastSearched       = $userTagSearchMap->getLastSearchedByUser($curr_user->id);
+        $lastSearchedTags   = array();
+        foreach($lastSearched as $ls) {
+            $lastSearchedTags[]     = $ls->tag;
+        }
+        //Unpublish rows that are not searched.
+        if(!empty($lastSearchedTags)) {
+            $where[]    = $userTagSearchMap->getAdapter()->quoteInto("published = ?",1);
+            if(!empty($tags)) {
+                $where[]    = $userTagSearchMap->getAdapter()->quoteInto("tag NOT IN (?)",$tags);
+            }
+
+            $userTagSearchMap->unpublish($where);
+        }
+
+        //Insert New Rows
+        foreach($tags as $tag) {
+            if(in_array($tag, $lastSearchedTags)) continue;
+
+            $row    = array(
+                "user_id"           => $curr_user->id,
+                "tag"               => $tag,
+                "published"         => 1,
+                "date_published"    => new Zend_Db_Expr('NOW()'),
+            );
+
+            $userTagSearchMap->insert($row);
+        }
+
+        //Get Articles
+        $articles   = $article->getArticlesByTags($tags);
+
+        echo json_encode($articles->toArray());
+    }
+
     public function testAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);

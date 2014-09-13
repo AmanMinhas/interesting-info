@@ -53,6 +53,8 @@
           <dbTableFile dbTableName="ArticleAttribute"/>
           <dbTableFile dbTableName="Name"/>
           <dbTableFile dbTableName="Comments"/>
+          <dbTableFile dbTableName="Test"/>
+          <dbTableFile dbTableName="UserTagSearchMap"/>
         </dbTableDirectory>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>

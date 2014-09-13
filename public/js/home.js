@@ -1,12 +1,15 @@
+
 $(document).ready(function(){
 	console.log("here");
-	create_thumbnail_click_event();
-
+	
+	// create_thumbnail_click_event();
 	search_by_tags();
+	get_last_searched_tags();
 
 	$("#article-tags").tagit({
 		singleField: true,
-        singleFieldNode: $('#all-tags')
+        singleFieldNode: $('#article-tags')
+        // singleFieldNode: $('#all-tags')
    	});
 });
 
@@ -17,13 +20,70 @@ function create_thumbnail_click_event() {
 	});
 }
 
+function get_last_searched_tags() {
+	$.ajax({
+		"dataType" 	: "json",
+		"url"		: "/User/get-last-searched-tags"
+	}).done(function(data){
+		$.each(data,function(i,tag){
+			$("#article-tags").tagit("createTag",tag); 	// Add previously searched tags into the tags area
+		});
+		//Now simulate a click to get articles from previously searched tags.
+		$("#search-by-tags").trigger("click");
+	}).fail(function(data){
+		console.log("fail - got last searched tags");
+		console.log(data);
+	})
+}
+
 function search_by_tags(){
 	$("#search-by-tags").click(function(){
 		// ev.preventDefault();
-		$(".searched-articles-list").empty();
-		var tags 		= $("#all-tags").val();
+		$(".searched-articles-list-row").empty();
+		var tags 		= $("#article-tags").val();
 
-		tags = tags.split(',');
 		console.log(tags); 
+		// tags = tags.split(',');
+		// console.log(tags); 
+
+		$.ajax({
+			"dataType"	: 'json',
+			"type"		: "POST",
+			"url"		: "/Article/search-articles-by-tags",
+			"data"		: {"tags":tags}
+		})
+		.done(function(data){
+			console.log("Success");
+			console.log(data);
+			var articles = data;
+
+			$.each(articles,function(i,article){
+				createArticleThumbnail(article);
+			});
+			create_thumbnail_click_event();
+
+		})
+		.fail(function(data){
+			console.log("Failed");
+			console.log(data);
+		});
 	});
+}
+
+function createArticleThumbnail(article){
+	console.log(article);
+	var th 	 = "";
+	
+	th 	+=	"<div class = 'col-lg-4'>";
+	th 	+=		"<div class = 'thumbnail article_thumbnail' id = article_thumbnail_"+article.id+">";
+	th 	+=			"<img src = '/img/default/default.jpg' />";
+	th 	+=			"<div class = 'caption'>";
+	th 	+=				"<h3>"+article.title+"</h3>";
+	th 	+=				"<p>"+article.article_text+"</p>";
+	th 	+=			"</div>";
+	th 	+=		"</div>";
+	th 	+=	"</div>";
+
+	console.log(th);
+	$(".searched-articles-list-row").append(th);
 }

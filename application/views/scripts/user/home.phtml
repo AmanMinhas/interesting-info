@@ -1,14 +1,15 @@
 <br /><br />
 <?php
-	echo $this->headScript()->appendFile($this->baseUrl().'/js/home.js');
+	// echo $this->headScript()->appendFile($this->baseUrl().'/js/home.js');
+	echo "<script src='".$this->baseUrl()."/js/home.js'></script>";
 	echo $this->headLink()->appendStylesheet($this->baseUrl().'/css/home.css');
 
 	echo $this->headScript()->appendFile($this->baseUrl().'/js/tag-it-js/tag-it.js');
 	echo $this->headLink()->appendStylesheet($this->baseUrl().'/css/tag-it-css/jquery.tagit.css');
 
 	$userInfo 	= $this->userInfo;
-	$articles 	= $this->articles;
 ?>
+
 <!-- Share Something Interesting Button-->
 <a href="/Article/new" class="btn btn-default btn-info btn-lg btn-block">
 	<span class="glyphicon glyphicon-plus"></span> 
@@ -31,31 +32,12 @@
 
 <div class = "col-lg-9 searched-articles-list">
 	<!-- List Articles -->
-	<?php
-		// echo "<div class = 'container'>";
-			echo "<div class = 'row'>";
-				foreach ($articles as $article) {
-					createArticleThumbnail($article);
-				}
-			echo "</div>";
-		// echo "</div>";
-
-		function createArticleThumbnail($article){
-			$th 	 = "";
-			$th 	.=	"<div class = 'col-lg-4'>";
-			$th 	.=		"<div class = 'thumbnail article_thumbnail' id = article_thumbnail_".$article->id.">";
-			$th 	.=			"<img src = '/img/default/default.jpg"."' />";
-			$th 	.=			"<div class = 'caption'>";
-			$th 	.=				"<h3>".$article->title."</h3>";
-			$th 	.=				"<p>".$article->article_text."</p>";
-			$th 	.=			"</div>";
-			$th 	.=		"</div>";
-			$th 	.=	"</div>";
-
-			echo $th;
-		}
-	?>
+	<div class = 'row searched-articles-list-row'>
+		<!-- Articles will show up in the searched-articles-list-row div -->
+	</div> 
 </div>
+
+<!-- Side Bar -->
 <div class = "col-lg-3">
 	<div class ="list-group">
 

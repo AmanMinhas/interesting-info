@@ -34,7 +34,7 @@ $(document).ready(function() {
 function createArticle() {
 	var title 		= $("#inputTitle").val();
 	var description	= $("#inputDescription").val();
-	var tags 		= $("#all-tags").val(); ;
+	var tags 		= $("#all-tags").val();
 
 	tags = tags.split(','); // Similar to php Explode() function
 	$.ajax({

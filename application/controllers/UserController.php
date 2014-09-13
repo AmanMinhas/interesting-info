@@ -120,7 +120,8 @@ class UserController extends Zend_Controller_Action
     public function testAction()
     {
       $this->_helper->layout()->disableLayout();
-      
+      $article          = new Application_Model_DbTable_Article;
+      $article->getArticlesByTags(array("this","test"));
       // echo json_encode($userData);
       // $mail = new Zend_Mail();
       // $mail 
@@ -137,23 +138,24 @@ class UserController extends Zend_Controller_Action
     }
 
     public function homeAction() {
-        // action body
+      // action body
+      $this->view->userInfo = Zend_Auth::getInstance()->getStorage()->read();
+    }
 
-        $userInfo         = Zend_Auth::getInstance()->getStorage()->read();
-        $articleOptions   = array();
-        $article          = new Application_Model_DbTable_Article;
-        $articleAttribute = new Application_Model_DbTable_ArticleAttributeMap;
-        $user             = new Application_Model_User;
+    public function getLastSearchedTagsAction() {
+      $this->_helper->layout->disableLayout();
+      $this->_helper->viewRenderer->setNoRender(TRUE);
+      
+      $lastSearchedTags   = array();
+      $curr_user          = Zend_Auth::getInstance()->getStorage()->read();
+      $userTagSearchMap   = new Application_Model_DbTable_UserTagSearchMap;
+      $article            = new Application_Model_DbTable_Article;
 
-        $select     = $article->select()
-                              ->where('uid = ?',$userInfo->id)
-                              ->where('published = ?',1)
-                              ->order('date_published DESC');
+      $lastSearched   = $userTagSearchMap->getLastSearchedByUser($curr_user->id);
+      foreach($lastSearched as $ls) {
+        $lastSearchedTags[]   = $ls->tag;
+      }
 
-        $articles   = $article->fetchAll($select);
-        
-        $this->view->articles = $articles;
-        $this->view->userInfo = $userInfo;
-        // $this->view->baseUrl  = $this->baseUrl();
+      echo json_encode($lastSearchedTags);
     }
 }
