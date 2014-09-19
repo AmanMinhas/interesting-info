@@ -20,6 +20,7 @@
           <actionMethod actionName="update"/>
           <actionMethod actionName="delete"/>
           <actionMethod actionName="home"/>
+          <actionMethod actionName="profile"/>
         </controllerFile>
         <controllerFile controllerName="YT">
           <actionMethod actionName="index"/>
@@ -101,6 +102,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Article">
             <viewScriptFile forActionName="create"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="profile"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

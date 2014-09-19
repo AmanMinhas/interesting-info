@@ -78,7 +78,7 @@ class UserController extends Zend_Controller_Action
       // action body
     }
 
-    public function updateAction() 
+    public function updateAction()
     {
       // action body
       $user = new Application_Model_User;
@@ -111,7 +111,8 @@ class UserController extends Zend_Controller_Action
       $this->_forward('update',null,null,array('id'=>$id, 'set'=>$set ));
     }
 
-    public function ajaxGetUserByIdAction() {
+    public function ajaxGetUserByIdAction()
+    {
       $this->_helper->layout->disableLayout();
       $this->_helper->viewRenderer->setNoRender(TRUE);
 
@@ -120,8 +121,10 @@ class UserController extends Zend_Controller_Action
     public function testAction()
     {
       $this->_helper->layout()->disableLayout();
-      $article          = new Application_Model_DbTable_Article;
-      $article->getArticlesByTags(array("this","test"));
+      $userInfo = Zend_Auth::getInstance()->getStorage()->read();
+      print_r($userInfo);
+      // $article          = new Application_Model_DbTable_Article;
+      // $article->getArticlesByTags(array("this","test"));
       // echo json_encode($userData);
       // $mail = new Zend_Mail();
       // $mail 
@@ -134,15 +137,17 @@ class UserController extends Zend_Controller_Action
       //   $mail->send();
       // } catch (Exception $e) {
       //   var_dump($e->getMessage());
-      // }
+      // 
     }
 
-    public function homeAction() {
+    public function homeAction()
+    {
       // action body
       $this->view->userInfo = Zend_Auth::getInstance()->getStorage()->read();
     }
 
-    public function getLastSearchedTagsAction() {
+    public function getLastSearchedTagsAction()
+    {
       $this->_helper->layout->disableLayout();
       $this->_helper->viewRenderer->setNoRender(TRUE);
       
@@ -158,4 +163,25 @@ class UserController extends Zend_Controller_Action
 
       echo json_encode($lastSearchedTags);
     }
+
+    public function profileAction()
+    {
+      $user   = new Application_Model_User;
+
+      $curr_user  = Zend_Auth::getInstance()->getStorage()->read();
+      $user_id    = $this->getRequest()->getParam('uid');
+
+      $my_profile     = false;
+      if($curr_user->id == $user_id) {
+        $my_profile   = true;
+        $user_row     = $curr_user;
+        echo "This is your profile";
+      } else {
+        $user_row     = $user->find($user_id); 
+        echo "This is not your profile";
+      }
+    }
+
+
 }
+

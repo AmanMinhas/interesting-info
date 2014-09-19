@@ -57,9 +57,18 @@ function search_by_tags(){
 			console.log(data);
 			var articles = data;
 
-			$.each(articles,function(i,article){
-				createArticleThumbnail(article);
-			});
+			if(articles.length === 0) {
+				var no_articles_msg	 = 	"<div class =\"alert alert-info\">";
+				no_articles_msg 	+= 		"<strong>Sorry!</strong> We do not have any article that matches your searched criteria.<hr>";
+				no_articles_msg 	+= 		"Click <a href=\"/Article/new\" class = \"btn btn-default btn-info \">Here</a> to share something interesting";
+				no_articles_msg 	+= 	"</div>";
+
+				$(".searched-articles-list-row").append(no_articles_msg);
+			} else {
+				$.each(articles,function(i,article){
+					createArticleThumbnail(article);
+				});
+			}
 			create_thumbnail_click_event();
 
 		})
@@ -76,7 +85,7 @@ function createArticleThumbnail(article){
 	
 	th 	+=	"<div class = 'col-lg-4'>";
 	th 	+=		"<div class = 'thumbnail article_thumbnail' id = article_thumbnail_"+article.id+">";
-	th 	+=			"<img src = '/img/default/default.jpg' />";
+	th 	+=			"<img src = '"+article.primary_img+"' />";
 	th 	+=			"<div class = 'caption'>";
 	th 	+=				"<h3>"+article.title+"</h3>";
 	th 	+=				"<p>"+article.article_text+"</p>";

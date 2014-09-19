@@ -26,9 +26,10 @@ class Application_Model_DbTable_Article extends Zend_Db_Table_Abstract
       if(!empty($tags)) {
         $select ->where("aam.value IN (?)",$tags);
       }
+      $select ->group('a.id');
       $select ->order('a.date_published DESC');
-
-   		$articles 	= $this->fetchAll($select);
+      
+      $articles 	= $this->fetchAll($select);
    		
    		return $articles;
    	}

@@ -35,6 +35,7 @@ function createArticle() {
 	var title 		= $("#inputTitle").val();
 	var description	= $("#inputDescription").val();
 	var tags 		= $("#all-tags").val();
+	var primary_img = "/img/default/default.jpg";	// Not using it at the moment.
 
 	tags = tags.split(','); // Similar to php Explode() function
 	$.ajax({
