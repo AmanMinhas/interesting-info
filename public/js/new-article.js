@@ -29,7 +29,75 @@ $(document).ready(function() {
 		}
 	});
 
+	$("#new-article-from").submit(function(ev){
+		// ev.preventDefault();
+		alert("here");
+		$(this).ajaxSubmit({
+			target			: '#output',
+			beforeSubmit	: beforeSubmit,
+			success 		: afterSuccess,
+			uploadProgress 	: onProgress,
+			resetForm 		: true
+		});
+		return false;
+	});
+
 });
+
+function beforeSubmit(){
+	//check whether client browser fully supports all File API
+	alert("in beforeSubmit");
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+		var fsize = $('#FileInput')[0].files[0].size; //get file size
+		var ftype = $('#FileInput')[0].files[0].type; // get file type
+        //allow file types 
+      	switch(ftype) {
+            case 'image/png': 
+            case 'image/gif': 
+            case 'image/jpeg': 
+            case 'image/pjpeg':
+            case 'text/plain':
+            case 'text/html':
+            case 'application/x-zip-compressed':
+            case 'application/pdf':
+            case 'application/msword':
+            case 'application/vnd.ms-excel':
+            case 'video/mp4':
+            break;
+            default:
+				$("#output").html("<b>"+ftype+"</b> Unsupported file type!");
+         		return false
+		}
+    
+		//Allowed file size is less than 5 MB (1048576 = 1 mb)
+		if(fsize>5242880) {
+			alert("<b>"+fsize +"</b> Too big file! <br />File is too big, it should be less than 5 MB.");
+			return false;
+		}
+	} 
+	else {
+		//Error for older unsupported browsers that doesn't support HTML5 File API
+		alert("Please upgrade your browser, because your current browser lacks some new features we need!");
+		return false;
+	}
+}
+
+function OnProgress(event, position, total, percentComplete) {
+	//Progress bar
+	$('#progressbox').show();
+	$('#progressbar').width(percentComplete + '%') //update progressbar percent complete
+	$('#statustxt').html(percentComplete + '%'); //update status text
+	if(percentComplete>50) {
+		$('#statustxt').css('color','#000'); //change status text to white after 50%
+	}
+}
+
+//function after succesful file upload (when server response)
+function afterSuccess()
+{
+	$('#progressbox').delay( 1000 ).fadeOut(); //hide progress bar
+}
+
 
 function createArticle() {
 	var title 		= $("#inputTitle").val();

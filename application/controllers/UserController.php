@@ -115,29 +115,6 @@ class UserController extends Zend_Controller_Action
     {
       $this->_helper->layout->disableLayout();
       $this->_helper->viewRenderer->setNoRender(TRUE);
-
-    }
-
-    public function testAction()
-    {
-      $this->_helper->layout()->disableLayout();
-      $userInfo = Zend_Auth::getInstance()->getStorage()->read();
-      print_r($userInfo);
-      // $article          = new Application_Model_DbTable_Article;
-      // $article->getArticlesByTags(array("this","test"));
-      // echo json_encode($userData);
-      // $mail = new Zend_Mail();
-      // $mail 
-      //   ->addTo('amandeepSinghMinhas@gmail.com',"Aman Minhas")
-      //   ->setSubject("My Subject")
-      //   ->setBodyText("Some body msg")
-      //   ->setBodyHtml("Some body msg") ;
-      
-      // try {
-      //   $mail->send();
-      // } catch (Exception $e) {
-      //   var_dump($e->getMessage());
-      // 
     }
 
     public function homeAction()
@@ -171,7 +148,12 @@ class UserController extends Zend_Controller_Action
       $curr_user  = Zend_Auth::getInstance()->getStorage()->read();
       $user_id    = $this->getRequest()->getParam('uid');
 
+      if(!isset($user_id)) {
+        $user_id = $curr_user->id;
+      }
+
       $my_profile     = false;
+      
       if($curr_user->id == $user_id) {
         $my_profile   = true;
         $user_row     = $curr_user;
@@ -180,8 +162,31 @@ class UserController extends Zend_Controller_Action
         $user_row     = $user->find($user_id); 
         echo "This is not your profile";
       }
+
+      $this->view->my_profile = $my_profile;
+      $this->view->user_row   = $user_row;
     }
 
-
+    public function testAction()
+    {
+      $this->_helper->layout()->disableLayout();
+      $userInfo = Zend_Auth::getInstance()->getStorage()->read();
+      print_r($userInfo);
+      // $article          = new Application_Model_DbTable_Article;
+      // $article->getArticlesByTags(array("this","test"));
+      // echo json_encode($userData);
+      // $mail = new Zend_Mail();
+      // $mail 
+      //   ->addTo('amandeepSinghMinhas@gmail.com',"Aman Minhas")
+      //   ->setSubject("My Subject")
+      //   ->setBodyText("Some body msg")
+      //   ->setBodyHtml("Some body msg") ;
+      
+      // try {
+      //   $mail->send();
+      // } catch (Exception $e) {
+      //   var_dump($e->getMessage());
+      // 
+    }
 }
 

@@ -58,6 +58,79 @@ class ArticleController extends Zend_Controller_Action
         // $this->view->newArticle = $newArticle;
     }
 
+    public function newTestAction() {
+        $this->view->headScript()->appendFile($this->view->baseUrl().'/js/new-article.js');
+        $this->view->headScript()->appendFile($this->view->baseUrl().'/js/FileUpload/jquery.form.min.js');
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl().'/css/new-article.css');
+
+        if($this->getRequest()->isPost) {
+
+        if(isset($_FILES["FileInput"]) && $_FILES["FileInput"]["error"]== UPLOAD_ERR_OK)
+        {
+            ############ Edit settings ##############
+            // $UploadDirectory    = '/home/website/file_upload/uploads/'; //specify upload directory ends with / (slash)
+            $UploadDirectory    = APPLICATION_PATH.'/../upload/'; //specify upload directory ends with / (slash)
+            // $UploadDirectory    = "/img/";
+            ##########################################
+            
+            /*
+            Note : You will run into errors or blank page if "memory_limit" or "upload_max_filesize" is set to low in "php.ini". 
+            Open "php.ini" file, and search for "memory_limit" or "upload_max_filesize" limit 
+            and set them adequately, also check "post_max_size".
+            */
+            
+            //check if this is an ajax request
+            if (!isset($_SERVER['HTTP_X_REQUESTED_WITH'])){
+                die('HTTP_X_REQUESTED_WITH not set');
+            }
+            
+            
+            //Is file size is less than allowed size.
+            if ($_FILES["FileInput"]["size"] > 5242880) {
+                die("File size is too big!");
+            }
+            
+            //allowed file type Server side check
+            switch(strtolower($_FILES['FileInput']['type']))
+                {
+                    //allowed file types
+                    case 'image/png': 
+                    case 'image/gif': 
+                    case 'image/jpeg': 
+                    case 'image/pjpeg':
+                    case 'text/plain':
+                    case 'text/html': //html file
+                    case 'application/x-zip-compressed':
+                    case 'application/pdf':
+                    case 'application/msword':
+                    case 'application/vnd.ms-excel':
+                    case 'video/mp4':
+                        break;
+                    default:
+                        die('Unsupported File!'); //output error
+            }
+            
+            $File_Name          = strtolower($_FILES['FileInput']['name']);
+            $File_Ext           = substr($File_Name, strrpos($File_Name, '.')); //get file extention
+            $Random_Number      = rand(0, 9999999999); //Random number to be added to name.
+            $NewFileName        = $Random_Number.$File_Ext; //new file name
+            
+            if(move_uploaded_file($_FILES['FileInput']['tmp_name'], $UploadDirectory.$NewFileName ))
+               {
+                // do other stuff 
+                       die('Success! File Uploaded.');
+            }else{
+                die('error uploading File!');
+            }
+            
+        }
+        else
+        {
+            die('Something wrong with upload! Is "upload_max_filesize" set correctly?');
+        }
+        }
+    }
+
     public function createAction()
     {
         $this->_helper->layout->disableLayout();
@@ -69,6 +142,7 @@ class ArticleController extends Zend_Controller_Action
 
         $articles               = new Application_Model_DbTable_Article;
         $articleAttributeMap    = new Application_Model_DbTable_ArticleAttributeMap;
+        $userActivityLog        = new Application_Model_DbTable_UserActivityLog;
 
         $row = array();
         foreach ($params as $key=>$val) {
@@ -91,12 +165,13 @@ class ArticleController extends Zend_Controller_Action
         $row["published"] = 1;
         $row["user_published"] = $userInfo->id ;
 
-        $id = $articles->insert($row); // $id will be inserted row's id.
+        $article_id = $articles->insert($row); // $id will be inserted row's id.
 
+        //Add Tags to article attribute map
         foreach ($tags as $tag) {
             $row = array(
                     "attr_id"           => 1 , // attr_id 1 is for tag
-                    "article_id"        => $id,
+                    "article_id"        => $article_id,
                     "value"             => $tag,
                     "published"         => 1 ,
                     "date_published"    => new Zend_Db_Expr("NOW()")       
@@ -104,6 +179,18 @@ class ArticleController extends Zend_Controller_Action
 
             $articleAttributeMap->insert($row);
         }
+
+        //Add row to Activity Log table
+        $insert_arr = array(
+                "user_id"           => $userInfo->id,
+                "activity_on"       => "Article",
+                "activity_url"      => "/Article?id=".$article_id,
+                "activity_text"     => "Created New Article.",
+                "published"         => 1,
+                "date_published"    => new Zend_Db_Expr("NOW()")
+            );
+        $userActivityLog->insert($insert_arr);
+
     }
 
     public function ajaxAddCommentAction() {
@@ -217,12 +304,82 @@ class ArticleController extends Zend_Controller_Action
         echo json_encode($articles->toArray());
     }
 
+    /*Remove this code and use Zend File Upload. Still getting cannot write to destination error. */
     public function testAction() {
         $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(TRUE);
+        // $this->_helper->viewRenderer->setNoRender(TRUE);
         
-        $userInfo = Zend_Auth::getInstance()->getStorage()->read();
+        // $userInfo = Zend_Auth::getInstance()->getStorage()->read();
         
-        print_r($userInfo);              
+        // print_r($userInfo);   
+        // <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        // $this->view->headScript()->appendFile("http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js");
+        // $this->view->headScript()->appendFile($this->view->baseUrl().'/js/FileUpload/jquery.form.min.js');
+        if($this->getRequest()->isPost()) {
+        
+            if(isset($_FILES["FileInput"]) && $_FILES["FileInput"]["error"]== UPLOAD_ERR_OK)
+            {
+
+                ############ Edit settings ##############
+                // $UploadDirectory    = 'F:/Websites/file_upload/uploads/'; //specify upload directory ends with / (slash)
+                $UploadDirectory    = APPLICATION_PATH.'/../upload/'; //specify upload directory ends with / (slash)
+                echo $UploadDirectory;
+                ##########################################
+                
+                /*
+                Note : You will run into errors or blank page if "memory_limit" or "upload_max_filesize" is set to low in "php.ini". 
+                Open "php.ini" file, and search for "memory_limit" or "upload_max_filesize" limit 
+                and set them adequately, also check "post_max_size".
+                */
+                
+                //check if this is an ajax request
+                if (!isset($_SERVER['HTTP_X_REQUESTED_WITH'])){
+                    die();
+                }
+                
+                
+                //Is file size is less than allowed size.
+                if ($_FILES["FileInput"]["size"] > 5242880) {
+                    die("File size is too big!");
+                }
+                
+                //allowed file type Server side check
+                switch(strtolower($_FILES['FileInput']['type']))
+                    {
+                        //allowed file types
+                        case 'image/png': 
+                        case 'image/gif': 
+                        case 'image/jpeg': 
+                        case 'image/pjpeg':
+                        case 'text/plain':
+                        case 'text/html': //html file
+                        case 'application/x-zip-compressed':
+                        case 'application/pdf':
+                        case 'application/msword':
+                        case 'application/vnd.ms-excel':
+                        case 'video/mp4':
+                            break;
+                        default:
+                            die('Unsupported File!'); //output error
+                }
+                
+                $File_Name          = strtolower($_FILES['FileInput']['name']);
+                $File_Ext           = substr($File_Name, strrpos($File_Name, '.')); //get file extention
+                $Random_Number      = rand(0, 9999999999); //Random number to be added to name.
+                $NewFileName        = $Random_Number.$File_Ext; //new file name
+                
+                if(move_uploaded_file($_FILES['FileInput']['tmp_name'], $UploadDirectory.$NewFileName ))
+                   {
+                    die('Success! File Uploaded.');
+                }else{
+                    die('error uploading File!');
+                }
+                
+            }
+            else
+            {
+                die('Something wrong with upload! Is "upload_max_filesize" set correctly?');
+            }          
+        }
     }
 }

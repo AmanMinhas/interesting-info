@@ -13,7 +13,7 @@
 <div class="alert alert-success show-validation-success"></div>
 
 <!-- New Article Form -->
-<form class = "form-horizontal new-article-form" method = "POST">
+<form class = "form-horizontal new-article-form" id = "new-article-from" method = "POST" enctype = "multipart/form-data">
 	<!-- Title -->
 	<div class = "form-group">
 		<label class="control-label col-xs-3" for ="title">Title : <span class="glyphicon glyphicon-pencil"> </label>
@@ -23,11 +23,16 @@
 	</div>
 	
 	<!-- Upload -->
-	<div class = "form-group">
+	<!-- <div class = "form-group">
 		<label class="control-label col-xs-3" for ="Upload">Upload : <span class="glyphicon glyphicon-upload"> </label>
 		<div class = "col-xs-6">
 		<input class="form-control" type ="file" id="inputUpload" placeholder = "Upload Images"></input>
-				<!-- <span class="btn btn-default btn-file"> Browse <input type="file"> </span>  -->
+		</div>
+	</div> -->
+	<div class = "form-group">
+		<label class="control-label col-xs-3" for ="Upload">Upload : <span class="glyphicon glyphicon-upload"> </label>
+		<div class = "col-xs-6">
+		<input class="form-control" type ="file" id="FileInput" name="FileInput" placeholder = "Upload Images"></input>
 		</div>
 	</div>
 
@@ -50,4 +55,7 @@
 
 	<button id="create-article" class="btn btn-primary btn-lg active btn-block"><span class="glyphicon glyphicon-send"></span> Create New Article</button>
 
+	<input type = "submit" id = "submit-new-article-form" />
 </form>
+
+<div id = "output"></div>
