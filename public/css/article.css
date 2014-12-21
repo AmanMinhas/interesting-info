@@ -64,3 +64,8 @@ textarea {
     height      : 60px;
     overflow    : hidden;
 }
+
+.social-share-containter {
+    margin-right: 26%;
+    cursor: pointer;
+}

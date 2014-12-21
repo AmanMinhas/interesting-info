@@ -80,6 +80,7 @@ function search_by_tags(){
 }
 
 function createArticleThumbnail(article){
+	console.log("atricle ");
 	console.log(article);
 	var th 	 = "";
 	
@@ -92,7 +93,8 @@ function createArticleThumbnail(article){
 	th 	+=			"</div>";
 	th 	+=		"</div>";
 	th 	+=	"</div>";
+	// th 	+=				"<img src = '/img/facebook-icon.png' class = 'img-circle' height = '20' widht = '20' alt = 'Share on Facebook' >";
 
-	console.log(th);
+	// console.log(th);
 	$(".searched-articles-list-row").append(th);
 }

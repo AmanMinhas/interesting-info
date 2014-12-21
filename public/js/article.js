@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	console.log("in article.js ");
+	
 	var comma_separated_tags 	= "";
 	var tags 					= [];
 	var article_id				= $("#hidden-article-id").val();
@@ -19,6 +21,7 @@ $(document).ready(function() {
 
 	$("#add-comment-form-0").hide();
 	$("#add-comment-button").click(function(){
+		console.log("comment button clicked");
 		$("#add-comment-form-0").toggle();
 	});
 	//Hide Add Comment on Cancel Click

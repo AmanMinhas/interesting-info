@@ -14,6 +14,9 @@ class ArticleController extends Zend_Controller_Action
         $this->view->headScript()->appendFile($this->view->baseUrl().'/js/new-article.js');
         $this->view->headLink()->appendStylesheet($this->view->baseUrl().'/css/new-article.css');
 
+        // $this->view->headScript()->appendFile($this->view->baseUrl().'/js/article.js');
+        // $this->view->headLink()->appendStylesheet($this->view->baseUrl().'/css/article.css');
+
         $id = $this->getRequest()->getParam('id');
         if(!isset($id)){
             $this->_redirect('/Article/new');

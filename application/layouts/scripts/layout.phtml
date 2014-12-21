@@ -3,7 +3,7 @@
 	<?= $this->render('includes/head_tag.phtml') ?>
 		
 	<body>
-		<?= $this->render('includes/header.phtml') ?>
+		<?php echo $this->render('includes/header.phtml'); ?> 
 		<br/><br/></br>
 		<div class= "container">
 			<?= $this->layout()->content; ?>
