@@ -89,7 +89,7 @@ function createArticleThumbnail(article){
 	th 	+=			"<img src = '"+article.primary_img+"' />";
 	th 	+=			"<div class = 'caption'>";
 	th 	+=				"<h3>"+article.title+"</h3>";
-	th 	+=				"<p>"+article.article_text+"</p>";
+	th 	+=				"<div style='height : 50px; overflow:hidden' ><p>"+article.article_text+"</p></div>";
 	th 	+=			"</div>";
 	th 	+=		"</div>";
 	th 	+=	"</div>";

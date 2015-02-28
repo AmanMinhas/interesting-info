@@ -1,7 +1,22 @@
-<?php
-	echo $this->headScript()->appendFile($this->baseUrl().'/js/tag-it-js/tag-it.js');
-	echo $this->headLink()->appendStylesheet($this->baseUrl().'/css/tag-it-css/jquery.tagit.css');
-?>
+
+<!-- JavaScript and CSS Start-->
+<script type="text/javascript" src="/js/new-article.js"></script>
+<link href="/css/new-article.css" media="screen" rel="stylesheet" type="text/css" >
+
+<script type="text/javascript" src="/js/tag-it-js/tag-it.js"></script>
+<link href="/css/tag-it-css/jquery.tagit.css" media="screen" rel="stylesheet" type="text/css" ><script 
+
+<script type="text/javascript" src="/js/text-editor-plugin/jquery.classyedit.js"></script><link href="/css/new-article.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/text-editor-plugin/jquery.classyedit.css" media="screen" rel="stylesheet" type="text/css" ><br></br>
+
+<!-- For classy text editor -->
+<script>
+	$(document).ready(function() {
+	    $(".classy-editor").ClassyEdit();
+	});
+</script>
+<!-- JavaScript and CSS End-->
+
 <br></br>
 
 <button class="btn btn-default btn-lg disabled btn-block"><span class="glyphicon glyphicon-plus"></span> New Article</button><br>
@@ -40,7 +55,7 @@
 	<div class = "form-group">
 		<label class="control-label col-xs-3" for ="Description">Description : <span class="glyphicon glyphicon-align-justify"> </label>
 		<div class = "col-xs-6">
-			<textarea class="form-control" id="inputDescription" placeholder = "Description (optional)" rows = "8" ></textarea> 
+			<textarea class = "form-control classy-editor" id = "inputDescription" placeholder = "Description (optional)"></textarea> 
 		</div>
 	</div>
 

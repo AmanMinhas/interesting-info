@@ -47,10 +47,9 @@ class ArticleController extends Zend_Controller_Action
     public function newAction()
     {
         // action body
-        $this->view->headScript()->appendFile($this->view->baseUrl().'/js/new-article.js');
-        $this->view->headLink()->appendStylesheet($this->view->baseUrl().'/css/new-article.css');
+        // $this->view->headScript()->appendFile($this->view->baseUrl().'/js/new-article.js');
+        // $this->view->headLink()->appendStylesheet($this->view->baseUrl().'/css/new-article.css');
 
-        // $newArticle = new Application_Form_NewArticleForm();
         $request = $this->getRequest();
         if($request->isPost()) {
             $params = $this->getRequest()->getPost();

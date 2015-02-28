@@ -21,7 +21,8 @@ class Application_Model_DbTable_Article extends Zend_Db_Table_Abstract
     					->setIntegrityCheck(false)
    						->from(array("a"=>$this->_name))
    						->join(array("aam"=>"ArticleAttributeMap"),"aam.article_id = a.id",array())
-   						->where('aam.published = ?',1);
+              ->where('aam.published = ?',1)
+   						->where('a.published = ?',1);
       
       if(!empty($tags)) {
         $select ->where("aam.value IN (?)",$tags);
